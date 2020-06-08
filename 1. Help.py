@@ -10,20 +10,20 @@ class Quiz:
         # Formatting variables...
         background_color = "coral"
         
-        # Converter Main Screen GUI...
-        self.converter_frame = Frame(width = 600, height = 600, bg = background_color,
+        # Quiz Main Screen GUI...
+        self.quiz_frame = Frame(width = 600, height = 600, bg = background_color,
                                      pady = 10)
-        self.converter_frame.grid()
+        self.quiz_frame.grid()
         
-        # Temperature Conversion Heading (row 0)
-        self.temp_converter_label = Label(self.converter_frame, text = "Geography Quiz",
+        # Geography Quiz Heading (row 0)
+        self.geo_quiz_label = Label(self.quiz_frame, text = "Geography Quiz",
                                           font = ("Arial", "16", "bold"),
                                           bg = background_color,
                                           padx = 10, pady = 10)
-        self.temp_converter_label.grid(row = 0)
+        self.geo_quiz_label.grid(row = 0)
         
         # Help Button (row 1)
-        self.help_button = Button(self.converter_frame, text = "Help",
+        self.help_button = Button(self.quiz_frame, text = "Help",
                                   font = ("Arial", "14"),
                                   padx = 10, pady = 10, command = self.help)
         self.help_button.grid(row = 1)
