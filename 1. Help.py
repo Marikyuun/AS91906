@@ -16,11 +16,11 @@ class Quiz:
         self.quiz_frame.grid()
         
         # Geography Quiz Heading (row 0)
-        self.geo_quiz_label = Label(self.quiz_frame, text = "Geography Quiz",
+        self.quiz_label = Label(self.quiz_frame, text = "Geography Quiz",
                                           font = ("Arial", "16", "bold"),
                                           bg = background_color,
                                           padx = 10, pady = 10)
-        self.geo_quiz_label.grid(row = 0)
+        self.quiz_label.grid(row = 0)
         
         # Help Button (row 1)
         self.help_button = Button(self.quiz_frame, text = "Help",
