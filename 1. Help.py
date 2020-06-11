@@ -25,6 +25,7 @@ class Quiz:
         # Help Button (row 1)
         self.help_button = Button(self.quiz_frame, text = "Help",
                                   font = ("Arial", "14"),
+                                  bg = "cyan",
                                   padx = 10, pady = 10, command = self.help)
         self.help_button.grid(row = 1)
 
