@@ -38,9 +38,10 @@ class Quiz:
                                         bg = "cyan",
                                         padx = 10, pady = 10, command = self.question)
         self.quiz_start_button.grid(row = 2)
-        
+    
     def question(self):
         Question(self)
+    question()
         
         
 class Question:
@@ -48,17 +49,25 @@ class Question:
          
         background_color = "cyan"
         
+        # Sets up child window (ie: question box)
+        self.question_box = Toplevel()
+        
         # Question Frame
-        self.question_frame = Frame(bg = background_color,
+        self.question_frame = Frame(self.question_box, bg = background_color,
                                     pady = 10)
          
+        # Set up Question Heading (row 0)
+        self.question_heading = Label(self.question_frame, text = "Question",
+                                      font = "arial 19 bold", bg = background_color)
+        self.question_heading.grid(row = 0)
+         
         # Question (row 1)
-        self.quiz_question_label = Label(self.question_frame,
+        self.question_label = Label(self.question_frame,
                                          text = "Placeholder",
                                          font = "Arial 10", wrap = 290,
                                          bg = background_color,
                                          padx = 10, pady = 10)  # Reads question from file and replaces placeholder with the question later.
-        self.quiz_question_label.grid(row = 1)
+        self.question_label.grid(row = 1)
      
         
 class Answer:
