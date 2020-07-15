@@ -1,0 +1,29 @@
+Ankara,Istanbul,Izmir,Konya
+Giant Panda,Dragon,Monkey,Pig
+Batman,Superman,Mickey Mouse,Ariel
+Sonora,Tengger,Atacama,Mojave
+Siberia,Sochi,Moscow,Kazan
+Seven,Five,Ten,Thirteen
+Sicily,Murano,Capri,Ischia
+Twenty-Four,Twelve,Six,Fourteen
+Sahara,Gobi,Arabian,Syrian
+Tiber,Waikato,Nile,Mississippi
+Zimbabwe,Namibia,Botswana,Angola
+Iceland,Funen,Zealand,Lolland
+Alaska,California,Florida,Texas
+Africa,Asia,Europe,North America
+Danube,Rhine,Moselle,Seine
+Volga,Loire,Oder,Elbe
+Dublin,London,Rome,New Delhi
+France,Germany,Italy,United Kingdom
+Honolulu,Kailua,Hilo,Lahaina
+Nippon,Japan,Gyoza,Kuni
+Poland,Ukraine,Slovakia,Czech Republic
+Toronto,Vancouver,Montreal,Calgary
+Canberra,Sydney,Melbourne,Adelaide
+The Mediterranean Sea and the Red Seas,Davis Strait and the Labrador Sea,Gulf of Aden and the Gulf of Oman,Arafura Sea and the Bali Sea
+Polytheistic,Monotheistic,Atheistic,Agnostic
+he refused the Senate's demand that he disband his army.,he tried to flee his defeat in Gaul.,he wanted to recruit more men for his army.,he needed to defend Rome against foreign invaders.
+Rhode Island,Wyoming,Maryland,Michigan
+Minnesota,Arizona,Massachusetts,Indiana
+Madagascar,Tanzania,Kiribati,New Zealand
