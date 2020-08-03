@@ -190,8 +190,8 @@ class Question:
             print("You are incorrect.....")
             print("The answer was "+answer+") "+b1)
         print("---------------------------------------------")
-        del questions[one]
-        del answers[one]            
+        del questions[question]
+        del answers[question]
         
     def answer_2(self):
         q = temp_ans[b]
@@ -203,8 +203,8 @@ class Question:
             print("You are incorrect.....")
             print("The answer was "+answer+") "+b1)
         print("---------------------------------------------")
-        del questions[one]
-        del answers[one]            
+        del questions[question]
+        del answers[question]
         
     def answer_3(self):
         q = temp_ans[c]
@@ -216,8 +216,8 @@ class Question:
             print("You are incorrect.....")
             print("The answer was "+answer+") "+b1)
         print("---------------------------------------------")
-        del questions[one]
-        del answers[one]            
+        del questions[question]
+        del answers[queston]     
         
     def answer_4(self):
         q = temp_ans[c]
@@ -229,8 +229,8 @@ class Question:
             print("You are incorrect.....")
             print("The answer was "+answer+") "+b1)
         print("---------------------------------------------")
-        del questions[one]
-        del answers[one]          
+        del questions[question]
+        del answers[question]
            
         total_time=time.time()-start #Calculates the time taken to finish the quiz.
         leaderboard_times.append(round(total_time,2))
