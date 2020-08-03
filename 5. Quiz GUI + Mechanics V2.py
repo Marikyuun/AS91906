@@ -101,6 +101,7 @@ class Question:
         
         start=time.time() #Starts the timer.
         for i in range(10):
+            
             # Set up Question Heading (row 0)
             self.question_heading = Label(self.question_frame, text = "Question "+str(i+1),
                                           font = "arial 14 bold", bg = background_color, padx = 100, pady = 20, borderwidth = 5, relief = "solid")
@@ -178,65 +179,64 @@ class Question:
             
             del temp_ans[d]
             if answer==b1:
-                answer='d' #If the answer isn't 'a' 'b' or 'c', the answer is 'd'.            
+                answer='d' #If the answer isn't 'a' 'b' or 'c', the answer is 'd'.
+    def answer_1(self):
+        q = temp_ans[a]
+        print(q)
+        if q.lower()==answer.lower() or q.lower()==b1.lower():
+            score=score+1
+            print("You are correct!!!!!")
+        else:
+            print("You are incorrect.....")
+            print("The answer was "+answer+") "+b1)
+        print("---------------------------------------------")
+        del questions[one]
+        del answers[one]            
         
-        def answer_1(self):
-            q = temp_ans[a]
-            print(q)
-            if q.lower()==answer.lower() or q.lower()==b1.lower():
-                score=score+1
-                print("You are correct!!!!!")
-            else:
-                print("You are incorrect.....")
-                print("The answer was "+answer+") "+b1)
-            print("---------------------------------------------")
-            del questions[one]
-            del answers[one]            
-            
-        def answer_2(self):
-            q = temp_ans[b]
-            print(q)
-            if q.lower()==answer.lower() or q.lower()==b1.lower():
-                score=score+1
-                print("You are correct!!!!!")
-            else:
-                print("You are incorrect.....")
-                print("The answer was "+answer+") "+b1)
-            print("---------------------------------------------")
-            del questions[one]
-            del answers[one]            
-            
-        def answer_3(self):
-            q = temp_ans[c]
-            print(q)
-            if q.lower()==answer.lower() or q.lower()==b1.lower():
-                score=score+1
-                print("You are correct!!!!!")
-            else:
-                print("You are incorrect.....")
-                print("The answer was "+answer+") "+b1)
-            print("---------------------------------------------")
-            del questions[one]
-            del answers[one]            
-            
-        def answer_4(self):
-            q = temp_ans[c]
-            print(q)
-            if q.lower()==answer.lower() or q.lower()==b1.lower():
-                score=score+1
-                print("You are correct!!!!!")
-            else:
-                print("You are incorrect.....")
-                print("The answer was "+answer+") "+b1)
-            print("---------------------------------------------")
-            del questions[one]
-            del answers[one]            
-    
+    def answer_2(self):
+        q = temp_ans[b]
+        print(q)
+        if q.lower()==answer.lower() or q.lower()==b1.lower():
+            score=score+1
+            print("You are correct!!!!!")
+        else:
+            print("You are incorrect.....")
+            print("The answer was "+answer+") "+b1)
+        print("---------------------------------------------")
+        del questions[one]
+        del answers[one]            
+        
+    def answer_3(self):
+        q = temp_ans[c]
+        print(q)
+        if q.lower()==answer.lower() or q.lower()==b1.lower():
+            score=score+1
+            print("You are correct!!!!!")
+        else:
+            print("You are incorrect.....")
+            print("The answer was "+answer+") "+b1)
+        print("---------------------------------------------")
+        del questions[one]
+        del answers[one]            
+        
+    def answer_4(self):
+        q = temp_ans[c]
+        print(q)
+        if q.lower()==answer.lower() or q.lower()==b1.lower():
+            score=score+1
+            print("You are correct!!!!!")
+        else:
+            print("You are incorrect.....")
+            print("The answer was "+answer+") "+b1)
+        print("---------------------------------------------")
+        del questions[one]
+        del answers[one]          
+           
         total_time=time.time()-start #Calculates the time taken to finish the quiz.
         leaderboard_times.append(round(total_time,2))
         leaderboard_scores.append(str(score))
         print("Your score is",str(score)+"/10")
-        questions.clear()    
+        questions.clear()            
     
     def close_question(self, partner):
         # Put start button back to normal...
