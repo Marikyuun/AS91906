@@ -53,6 +53,8 @@ class Quiz:
 class Question:
     def __init__(self,partner):
         
+        score = 0
+        
         file=open("Q.txt","r")
         for i in file.read().split("\n"): #reads the Q.txt file and appends every line individually to the questions list.
             questions.append(i)
@@ -62,7 +64,6 @@ class Question:
             answers.append(i)
         questions.pop() #There is an extra empty item in the both the lists so this removes it.
         answers.pop()
-        score=0
         
         print(questions)
         
@@ -97,10 +98,75 @@ class Question:
         
         # Question Frame
         self.question_frame = Frame(self.question_box, width = 300, bg = "pale green")
-        self.question_frame.grid()
+        self.question_frame.grid()        
         
         start=time.time() #Starts the timer.
+        
+        global answer
+        global b1
+        global question_number
+        
         for i in range(10):
+            
+            def answer_1(self):
+                q = 'a'
+                print(q)
+                if q.lower()==answer.lower() or q.lower()==b1.lower():
+                    score=score+1
+                    print("You are correct!!!!!")
+                else:
+                    print("You are incorrect.....")
+                    print("The answer was "+answer+") "+b1)
+                print("---------------------------------------------")
+                print(question_number)
+                print(len(questions))
+                del questions[question_number]
+                del answers[question_number]
+                
+            def answer_2(self):
+                q = 'b'
+                print(q)
+                if q.lower()==answer.lower() or q.lower()==b1.lower():
+                    score=score+1
+                    print("You are correct!!!!!")
+                else:
+                    print("You are incorrect.....")
+                    print("The answer was "+answer+") "+b1)
+                print("---------------------------------------------")
+                print(question_number)
+                print(len(questions))
+                del questions[question_number]
+                del answers[question_number]
+                
+            def answer_3(self):
+                q = 'c'
+                print(q)
+                if q.lower()==answer.lower() or q.lower()==b1.lower():
+                    score=score+1
+                    print("You are correct!!!!!")
+                else:
+                    print("You are incorrect.....")
+                    print("The answer was "+answer+") "+b1)
+                print("---------------------------------------------")
+                print(question_number)
+                print(len(questions))
+                del questions[question_number]
+                del answers[question_number]
+                
+            def answer_4(self):
+                q = 'd'
+                print(q)
+                if q.lower()==answer.lower() or q.lower()==b1.lower():
+                    score=score+1
+                    print("You are correct!!!!!")
+                else:
+                    print("You are incorrect.....")
+                    print("The answer was "+answer+") "+b1)
+                print("---------------------------------------------")
+                print(question_number)
+                print(len(questions))
+                del questions[question_number]
+                del answers[question_number]     
             
             # Set up Question Heading (row 0)
             self.question_heading = Label(self.question_frame, text = "Question "+str(i+1),
@@ -111,15 +177,13 @@ class Question:
             
             # Question (row 1)
             self.question_label = Label(self.question_frame,
-                                             text = questions[question_number], # WILL EVENTUALLY GET QUESTION READ FROM A TEXT FILE HERE
+                                             text = questions[question_number],
                                              font = "Arial 12 bold", wrap = 290,
                                              bg = "pale green",
-                                             padx = 100, pady = 20)  # Reads question from file and replaces placeholder with the question later.
+                                             padx = 100, pady = 20)
             self.question_label.grid(row = 1)
             
-            print(answers[question_number])
             temp_ans = answers[question_number].split(",")
-            print(temp_ans)
             
             answer=temp_ans[0]
             b1=answer
@@ -130,7 +194,7 @@ class Question:
                                                text = "a) "+temp_ans[a],
                                                font = "Arial 10", wrap = 290,
                                                bg = background_color,
-                                               padx = 100, pady = 20, command = self.answer_1)  # Reads one possible answer from file and replaces place holder with the answer later.
+                                               padx = 100, pady = 20, command = answer_1(self))
             self.question_answer_1_button.grid(row = 2, pady = 10)
             
             del temp_ans[a]
@@ -144,7 +208,7 @@ class Question:
                                                text = "b) "+temp_ans[b],
                                                font = "Arial 10", wrap = 290,
                                                bg = "coral",
-                                               padx = 100, pady = 20, command = self.answer_2)  # Reads one possible answer from file and replaces place holder with the answer later.
+                                               padx = 100, pady = 20, command = answer_2(self))
             self.question_answer_2_button.grid(row = 3, pady = 10)
             
             del temp_ans[b]
@@ -159,7 +223,7 @@ class Question:
                                                text = "c) "+temp_ans[c],
                                                font = "Arial 10", wrap = 290,
                                                bg = background_color,
-                                               padx = 100, pady = 20, command = self.answer_3)  # Reads one possible answer from file and replaces place holder with the answer later.
+                                               padx = 100, pady = 20, command = answer_3(self))
             self.question_answer_3_button.grid(row = 4, pady = 10)
             
             del temp_ans[c]
@@ -174,74 +238,33 @@ class Question:
                                                text = "d) "+temp_ans[d],
                                                font = "Arial 10", wrap = 290,
                                                bg = "coral",
-                                               padx = 100, pady = 20, command = self.answer_4)  # Reads one possible answer from file and replaces place holder with the answer later.
+                                               padx = 100, pady = 20, command = answer_4(self))
             self.question_answer_4_button.grid(row = 5, pady = 10)
             
             del temp_ans[d]
             if answer==b1:
                 answer='d' #If the answer isn't 'a' 'b' or 'c', the answer is 'd'.
-    def answer_1(self):
-        q = temp_ans[a]
-        print(q)
-        if q.lower()==answer.lower() or q.lower()==b1.lower():
-            score=score+1
-            print("You are correct!!!!!")
-        else:
-            print("You are incorrect.....")
-            print("The answer was "+answer+") "+b1)
-        print("---------------------------------------------")
-        del questions[question]
-        del answers[question]
-        
-    def answer_2(self):
-        q = temp_ans[b]
-        print(q)
-        if q.lower()==answer.lower() or q.lower()==b1.lower():
-            score=score+1
-            print("You are correct!!!!!")
-        else:
-            print("You are incorrect.....")
-            print("The answer was "+answer+") "+b1)
-        print("---------------------------------------------")
-        del questions[question]
-        del answers[question]
-        
-    def answer_3(self):
-        q = temp_ans[c]
-        print(q)
-        if q.lower()==answer.lower() or q.lower()==b1.lower():
-            score=score+1
-            print("You are correct!!!!!")
-        else:
-            print("You are incorrect.....")
-            print("The answer was "+answer+") "+b1)
-        print("---------------------------------------------")
-        del questions[question]
-        del answers[queston]     
-        
-    def answer_4(self):
-        q = temp_ans[c]
-        print(q)
-        if q.lower()==answer.lower() or q.lower()==b1.lower():
-            score=score+1
-            print("You are correct!!!!!")
-        else:
-            print("You are incorrect.....")
-            print("The answer was "+answer+") "+b1)
-        print("---------------------------------------------")
-        del questions[question]
-        del answers[question]
-           
+            
+            
+            def destroy_children(parent_frame):
+                # Destroy all childen from a frame
+                # :param parent_frame: The frame to destory all children from
+                
+                for child in parent_frame.winfo_children():
+                    child.destroy()
+            
+            destroy_children(self.question_frame)
+    
         total_time=time.time()-start #Calculates the time taken to finish the quiz.
         leaderboard_times.append(round(total_time,2))
         leaderboard_scores.append(str(score))
         print("Your score is",str(score)+"/10")
-        questions.clear()            
+        questions.clear()       
     
     def close_question(self, partner):
         # Put start button back to normal...
         partner.quiz_start_button.config(state=NORMAL)
-        self.question_box.destroy()    
+        self.question_box.destroy()
         
 # main routine
 if __name__ == "__main__":
@@ -249,3 +272,4 @@ if __name__ == "__main__":
     root.title("Geography Quiz")
     something = Quiz()
     root.mainloop()
+    
