@@ -36,18 +36,18 @@ class Quiz:
 
 
 class Help:
-    def __init__(self,partner):
+    def __init__(self,parent):
         
         background = "cyan"
         
         # disable help button
-        partner.help_button.config(state = DISABLED)
+        parent.help_button.config(state = DISABLED)
         
         # Sets up child window (ie: help box)
         self.help_box = Toplevel()
         
         # If users press cross at top, closes help and 'releases' help button
-        self.help_box.protocol('WM_DELETE_WINDOW', partial(self.close_help, partner))        
+        self.help_box.protocol('WM_DELETE_WINDOW', partial(self.close_help, parent))        
         
         
         # Set up GUI Frame
@@ -67,12 +67,12 @@ class Help:
         # Dismiss Button (row 2)
         self.dismiss_button = Button(self.help_frame, text = "Dismiss",
                                      width = 10, bg = "coral", font = "arial 10 bold",
-                                    command = partial(self.close_help, partner))
+                                    command = partial(self.close_help, parent))
         self.dismiss_button.grid(row = 2, pady = 10)        
 
-    def close_help(self, partner):
+    def close_help(self, parent):
         # Put help button back to normal...
-        partner.help_button.config(state = NORMAL)
+        parent.help_button.config(state = NORMAL)
         self.help_box.destroy()
 
 # main routine
