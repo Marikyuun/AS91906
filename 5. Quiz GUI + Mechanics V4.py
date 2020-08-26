@@ -182,7 +182,7 @@ class Question:
                                   bg = "white",
                                   padx = 100, pady = 20, command = self.next_question,
                                   state = DISABLED)
-        self.next_question_button.grid(row = 6, pady = 20)
+        self.next_question_button.grid(row = 6, pady = 20, padx = 20)
         
     def next_question(self):
         if len(question_number)<10:
@@ -232,13 +232,19 @@ class Question:
             self.question_answer_2_button.configure(text="b) "+b, state=NORMAL)
             self.question_answer_3_button.configure(text="c) "+c, state=NORMAL)
             self.question_answer_4_button.configure(text="d) "+d, state=NORMAL)
-            self.question_label.configure(text=questions[question_index])
-            self.question_heading.configure(text=("Question "+str(len(question_number))))
+            self.question_label.configure(text = questions[question_index])
+            self.question_heading.configure(text = ("Question "+str(len(question_number))))
             del questions[question_index]
             del answers[question_index]
             
         else:
-            self.next_question_button.configure(command = self.score)
+            self.question_heading.destroy()
+            self.question_label.destroy()
+            self.question_answer_1_button.destroy()
+            self.question_answer_2_button.destroy()
+            self.question_answer_3_button.destroy()
+            self.question_answer_4_button.destroy()
+            self.next_question_button.configure(text = "View Score", command = self.score, pady = 20)
         
         def destroy_children(parent_frame):
             # Destroy all children from a frame
