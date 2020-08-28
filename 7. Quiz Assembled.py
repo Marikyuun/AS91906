@@ -331,45 +331,13 @@ class Question:
         else:
                 
             self.destroy_children(self.question_frame)
-            
-            self.summary_label = Label(self.question_frame, font = "calibri 20 bold",bg = 'coral', width = 35,
-                                       text = "Quiz Summary", pady = 10)
-            self.summary_label.grid(row = 0)            
-            
+
             self.score_button = Button(self.question_frame,
                                       text = "View Score",
                                       font = "calibri 12", wrap = 290,
                                       bg = "cyan", width = 30,
                                       padx = 100, pady = 20, command = self.score)
             self.score_button.grid(row = 1, pady = 20, padx = 20)
-            
-            self.question_summary_button = Button(self.question_frame,
-                                      text = "Question Summary",
-                                      font = "calibri 12", wrap = 290,
-                                      bg = "cyan", width = 30,
-                                      padx = 100, pady = 20, command = self.question_summary)
-            self.question_summary_button.grid(row = 2, pady = 20, padx = 20)
-            
-            self.leaderboard_button = Button(self.question_frame,
-                                      text = "Leaderboard",
-                                      font = "calibri 12", wrap = 290,
-                                      bg = "cyan", width = 30,
-                                      padx = 100, pady = 20, command = self.leaderboard)
-            self.leaderboard_button.grid(row = 3, pady = 20, padx = 20)
-            
-            self.quit_button = Button(self.question_frame,
-                                      text = "Quit",
-                                      font = "calibri 12",
-                                      bg = "red", width = 10,
-                                      command = self.quit)
-            self.quit_button.grid(pady = 10, row = 4, column = 0)
-            
-            self.restart_button = Button(self.question_frame,
-                                         text = "Restart",
-                                         font = "calibri 12",
-                                         bg = "green", width = 10,
-                                         command = self.restart)
-            self.restart_button.grid(pady = 10, row = 4, column = 0)
             
             if len(import_once) == 1:
                 import_once.clear()
@@ -433,18 +401,6 @@ class Question:
     def importing(self):
         Importing()
     
-    def question_summary(self):
-        Question_Summary()
-    
-    def leaderboard(self):
-        Leaderboard()
-    
-    def restart(self):
-        Restart()
-    
-    def quit(self):
-        Quit()
-    
     def close_question(self, parent):
         # Put start button back to normal...
         parent.quiz_start_button.config(state=NORMAL)
@@ -490,26 +446,7 @@ class Exporting:
             f.write(leaderboard_names[i]+","+str(leaderboard_scores[i])+","+"\n") #Writes back old scores into 'Scores.txt' file to keep previous data.
         f.write(leaderboard_names[-1]+","+str(leaderboard_scores[-1])+","+"\n") #Writes in the current users scores into 'Scores.txt' to record new data.
         f.close()
-
-class Question_Summary:
-    
-    def __init__(self):
-        a
-
-class Leaderboard:
-    
-    def __init__(self):
-        a
-
-class Restart:
-    
-    def __init__(self):
-        a
-
-class Quit:
-    
-    def __init__(self):
-        sys.exit()
+        
 
 # main routine
 if __name__ == "__main__":
