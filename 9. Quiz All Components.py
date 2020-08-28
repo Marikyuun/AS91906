@@ -12,6 +12,9 @@ question_number=["1"]
 correct_answers=[]
 highscore_list=[]
 import_once = ['1']  # One element in the list that will be deleted so that the import function happens only once
+question_summary_store=[]
+answer_summary_store=[]
+question_summary_index = 0
 
 class Quiz:
     
@@ -171,6 +174,9 @@ class Question:
         temp_ans = answers[question_index].split(",")
         answer = temp_ans[0]
         answer_control = temp_ans[0]
+        question_summary_store.append(questions[question_index])
+        answer_summary_store.append(temp_ans[0])
+        
         print(questions[question_index])
         print(temp_ans)
         print(answer)
@@ -279,12 +285,14 @@ class Question:
 
     def next_question(self):
         
-        if len(question_number)<1:  # CHANGE BACK TO 10 LATER
+        if len(question_number)<2:  # CHANGE BACK TO 10 LATER
             question_number.append("1")
             question_index = random.randint(0,len(questions)-1)
             temp_ans = answers[question_index].split(",")
             answer = temp_ans[0]
             answer_control = temp_ans[0]
+            question_summary_store.append(questions[question_index])
+            answer_summary_store.append(temp_ans[0])            
             
             print(questions[question_index])
             print(answer)
@@ -458,12 +466,12 @@ class Game_Summary:
                                  bg = "pale green", width = 35, pady = 10)
         self.your_score_label.grid(row = 1, pady = 20)
         
-        self.restart_button = Button(parent.question_frame,
+        self.back_button = Button(parent.question_frame,
                                      text = "Back",
                                      font = "calibri 12",
                                      bg = "coral", width = 10,
                                      command = parent.game_summary)
-        self.restart_button.grid(pady = 10, row = 2) 
+        self.back_button.grid(pady = 10, row = 2) 
     
     def question_summary(self,parent):
         parent.destroy_children(parent.question_frame)
@@ -472,20 +480,71 @@ class Game_Summary:
                                  text = "Question Summary",
                                  font = "calibri 20 bold underline",
                                  bg = "coral", width = 35, pady = 10)
-        self.score_label.grid(row = 0,)
+        self.score_label.grid(row = 0, columnspan = 2)
         
-        self.your_score_label = Label(parent.question_frame,
-                                 text = "Placeholder",
-                                 font = "calibri 20 bold",
+        self.question_number_label = Label(parent.question_frame,
+                                 text = "Question " + str(question_summary_index+1), wrap = 290,
+                                 font = "calibri 14 bold", borderwidth = 1, relief = "solid",
                                  bg = "pale green", width = 35, pady = 10)
-        self.your_score_label.grid(row = 1, pady = 20)
+        self.question_number_label.grid(row = 1, pady = 20, columnspan = 2)
         
-        self.restart_button = Button(parent.question_frame,
+        self.question_label = Label(parent.question_frame,
+                                 text = "Q: "+question_summary_store[question_summary_index], wrap = 290,
+                                 font = "calibri 12", borderwidth = 1, relief = "solid",
+                                 bg = "pale green", width = 43, pady = 10)
+        self.question_label.grid(row = 2, pady = 20, columnspan = 2)
+        
+        self.answer_label = Label(parent.question_frame,
+                                 text = "A: "+answer_summary_store[question_summary_index], wrap = 290,
+                                 font = "calibri 12", borderwidth = 1, relief = "solid",
+                                 bg = "pale green", width = 43, pady = 10)
+        self.answer_label.grid(row = 3, pady = 20, columnspan = 2)
+        
+        self.previous_question_button = Button(parent.question_frame,
+                                  text = "Previous Question",
+                                  font = "calibri 12", wrap = 290,
+                                  bg = "white",
+                                  padx = 30, pady = 10, command = self.next_question)
+        self.previous_question_button.grid(row = 4, column = 0, pady = 5, padx = 3)
+        
+        self.next_question_button = Button(parent.question_frame,
+                                  text = "Next Question",
+                                  font = "calibri 12", wrap = 290,
+                                  bg = "white",
+                                  padx = 30, pady = 10, command = self.previous_question)
+        self.next_question_button.grid(row = 4, column = 1, pady = 5, padx = 3)
+        
+        self.back_button = Button(parent.question_frame,
                                      text = "Back",
-                                     font = "calibri 12",
+                                     font = "calibri 12", borderwidth = 1, relief = "solid",
                                      bg = "coral", width = 10,
                                      command = parent.game_summary)
-        self.restart_button.grid(pady = 10, row = 2) 
+        self.back_button.grid(pady = 15, row = 5, columnspan = 2)
+        
+        if question_summary_index == 0:
+            self.previous_question_button.configure(state = DISABLED)
+        else:
+            self.previous_question_button.configure(state = NORMAL)
+        
+        if question_summary_index + 1 == len(question_summary_store):
+            self.next_question_button.configure(state = DISABLED)
+        else:
+            self.next_question_button.configure(state = NORMAL)
+        
+        print(question_summary_store)
+        print(answer_summary_store)
+    
+    def next_question(self):
+        global question_summary_index
+        question_summary_index = question_summary_index + 1
+        print(question_summary_index)
+        self.question_summary
+
+    def previous_question(self):
+        global question_summary_index
+        question_summary_index = question_summary_index - 1
+        self.question_summary
+
     
     def leaderboard(self,parent):
         parent.destroy_children(parent.question_frame)
@@ -498,16 +557,16 @@ class Game_Summary:
         
         self.your_score_label = Label(parent.question_frame,
                                  text = "Placeholder",
-                                 font = "calibri 20 bold",
+                                 font = "calibri 20 bold", borderwidth = 1,
                                  bg = "pale green", width = 35, pady = 10)
         self.your_score_label.grid(row = 1, pady = 20)
         
-        self.restart_button = Button(parent.question_frame,
+        self.back_button = Button(parent.question_frame,
                                      text = "Back",
-                                     font = "calibri 12",
+                                     font = "calibri 12", borderwidth = 1,
                                      bg = "coral", width = 10,
                                      command = parent.game_summary)
-        self.restart_button.grid(pady = 10, row = 2) 
+        self.back_button.grid(pady = 10, row = 2) 
     
     def quit(self):
         sys.exit()
@@ -516,7 +575,7 @@ class Game_Summary:
         a
     
     def importing(self):
-        Importing()    
+        Importing()
     
     def destroy_children(self,parent_frame):
         # Destroy all children from a frame
