@@ -238,7 +238,7 @@ class Question:
         
         # Set up Question Heading (row 0)
         self.question_heading = Label(self.question_frame, text = "Question "+str(len(question_number)),
-                                      font = "calibri 14 bold", bg = background_color, padx = 200, pady = 20, borderwidth = 5, relief = "solid")
+                                      font = "calibri 14 bold", bg = background_color, padx = 210, pady = 20, borderwidth = 2, relief = "solid")
         self.question_heading.grid(row = 0)        
         
         # Question (row 1)
@@ -294,7 +294,7 @@ class Question:
 
     def next_question(self):
         
-        if len(question_number)<10:  # CHANGE BACK TO 10 LATER
+        if len(question_number)<1:  # CHANGE BACK TO 10 LATER
             question_number.append("1")
             question_index = random.randint(0,len(questions)-1)
             temp_ans = answers[question_index].split(",")
@@ -418,43 +418,36 @@ class Game_Summary:
         parent.destroy_children(parent.question_frame)
         
         self.summary_label = Label(parent.question_frame, font = "calibri 20 bold underline",bg = 'coral', width = 35,
-                                   text = "Quiz Summary", pady = 10)
-        self.summary_label.grid(row = 0, columnspan = 2)        
+                                   text = "Quiz Summary", pady = 10, borderwidth = 1, relief = "solid")
+        self.summary_label.grid(row = 0)        
         
         self.score_button = Button(parent.question_frame,
                                   text = "View Score",
                                   font = "calibri 12", wrap = 290,
                                   bg = "cyan", width = 30,
                                   padx = 100, pady = 20, command = lambda : self.score(parent))
-        self.score_button.grid(row = 1, pady = 20, padx = 20, columnspan = 2)
+        self.score_button.grid(row = 1, pady = 20, padx = 20)
         
         self.question_summary_button = Button(parent.question_frame,
                                   text = "Question Summary",
                                   font = "calibri 12", wrap = 290,
                                   bg = "cyan", width = 30,
                                   padx = 100, pady = 20, command = lambda : self.question_summary(parent))
-        self.question_summary_button.grid(row = 2, pady = 20, padx = 20, columnspan = 2)
+        self.question_summary_button.grid(row = 2, pady = 20, padx = 20)
         
         self.leaderboard_button = Button(parent.question_frame,
                                   text = "Leaderboard",
                                   font = "calibri 12", wrap = 290,
                                   bg = "cyan", width = 30,
                                   padx = 100, pady = 20, command = lambda : self.leaderboard(parent))
-        self.leaderboard_button.grid(row = 3, pady = 20, padx = 20, columnspan = 2)
+        self.leaderboard_button.grid(row = 3, pady = 20, padx = 20)
         
         self.quit_button = Button(parent.question_frame,
                                   text = "Quit",
                                   font = "calibri 12",
                                   bg = "red", width = 10,
                                   command = self.quit)
-        self.quit_button.grid(pady = 10, row = 4, column = 0)
-        
-        self.restart_button = Button(parent.question_frame,
-                                     text = "Restart",
-                                     font = "calibri 12",
-                                     bg = "green", width = 10,
-                                     command = lambda : self.restart(parent))
-        self.restart_button.grid(pady = 10, row = 4, column = 1)
+        self.quit_button.grid(pady = 10, row = 4)
         
         if len(import_once) == 1:
             import_once.clear()
@@ -465,7 +458,7 @@ class Game_Summary:
         parent.destroy_children(parent.question_frame)
         
         self.score_label = Label(parent.question_frame,
-                                 text = "Total Score",
+                                 text = "Total Score", borderwidth = 1, relief = "solid",
                                  font = "calibri 20 bold underline",
                                  bg = "coral", width = 35, pady = 10)
         self.score_label.grid(row = 0,)
@@ -474,7 +467,7 @@ class Game_Summary:
                                  text = "Your Score Is: " + str(len(scores)) + "/10",
                                  font = "calibri 20 bold",
                                  bg = "pale green", width = 35, pady = 10)
-        self.your_score_label.grid(row = 1, pady = 20)
+        self.your_score_label.grid(row = 1, pady = 10)
         
         self.back_button = Button(parent.question_frame,
                                      text = "Back",
@@ -492,7 +485,7 @@ class Game_Summary:
         parent.destroy_children(parent.question_frame)
         
         self.score_label = Label(parent.question_frame,
-                                 text = "Question Summary",
+                                 text = "Question Summary", borderwidth = 1, relief = "solid",
                                  font = "calibri 20 bold underline",
                                  bg = "coral", width = 35, pady = 10)
         self.score_label.grid(row = 0, columnspan = 2)
@@ -568,32 +561,63 @@ class Game_Summary:
         parent.destroy_children(parent.question_frame)
         
         self.score_label = Label(parent.question_frame,
-                                 text = "Leaderboard",
+                                 text = "Leaderboard", borderwidth = 1, relief = "solid",
                                  font = "calibri 20 bold underline",
                                  bg = "coral", width = 35, pady = 10)
         self.score_label.grid(row = 0,)
         
-        self.your_score_label = Label(parent.question_frame,
-                                 text = "Placeholder",
+        self.top_score_label = Label(parent.question_frame,
+                                 text = "Top 10 Scores",
+                                 font = "calibri 20 bold underline", borderwidth = 1,
+                                 bg = "cyan", width = 35, pady = 10)
+        self.top_score_label.grid(row = 1, pady = 10)        
+        
+        self.leaderboard_score_label = Label(parent.question_frame,
+                                 text = "Placeholder", justify = LEFT,
                                  font = "calibri 20 bold", borderwidth = 1,
                                  bg = "pale green", width = 35, pady = 10)
-        self.your_score_label.grid(row = 1, pady = 20)
+        self.leaderboard_score_label.grid(row = 2)
         
         self.back_button = Button(parent.question_frame,
                                      text = "Back",
                                      font = "calibri 12", borderwidth = 1,
                                      bg = "coral", width = 10,
                                      command = parent.game_summary)
-        self.back_button.grid(pady = 10, row = 2) 
+        self.back_button.grid(pady = 10, row = 3)
+        
+        print(leaderboard_names)
+        print(leaderboard_scores)
+        
+        temp_scores = sorted(leaderboard_scores, reverse=True) #Temporary list to help with later sorting.
+        for i in range(0,len(temp_scores)): #Turns the temp scores into integers so that it can be sorted.
+            temp_scores[i]=int(temp_scores[i])
+        temp_scores=sorted(temp_scores,reverse=True)
+        for i in range(0,len(temp_scores)): #Turns the temp scores into a string.
+            temp_scores[i]=str(temp_scores[i])
+        print(temp_scores)
+        
+        n = 0
+        words = ""
+        
+        for i in temp_scores:
+            n = n + 1
+            if n < 11:
+                print(n)
+                
+                leaderboard_sort = leaderboard_scores.index(int(i))
+                words = words + str(temp_scores.index(i)+1)+")    "+leaderboard_names[leaderboard_sort]+" "+str(leaderboard_scores[leaderboard_sort])+"/10\n"
+                self.leaderboard_score_label.configure(text = words)
+                del leaderboard_names[leaderboard_sort]
+                del leaderboard_scores[leaderboard_sort]
     
     def quit(self):
         sys.exit()
     
-    def restart(self,parent):
-        a
-    
     def importing(self):
         Importing()
+    
+    def start(self):
+        Start()
     
     def destroy_children(self,parent_frame):
         # Destroy all children from a frame
@@ -613,7 +637,7 @@ class Importing:
         reading.pop()
         for i in reading:
             leaderboard_names.append(i.split(",")[0]) #Splits each item in reading at ',' and takes the first item.
-            leaderboard_scores.append(i.split(",")[1]) #Splits each item in reading at ',' and takes the second item.
+            leaderboard_scores.append(int(i.split(",")[1])) #Splits each item in reading at ',' and takes the second item.
         f.close()
         
         self.exporting()
