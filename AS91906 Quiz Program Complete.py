@@ -30,14 +30,16 @@ class Quiz:
         # Quiz Frame
         self.quiz_frame = Frame(bg=background_color,
                                 pady=10)
-        self.quiz_frame.grid()
+        self.quiz_frame.grid(sticky=NSEW)
+        self.quiz_frame.columnconfigure(0, weight=1)
+        self.quiz_frame.rowconfigure(0, weight=1)
 
         # Quiz Heading (row 0)
         self.quiz_heading_label = Label(self.quiz_frame,
                                         text="Geography Quiz",
                                         font="calibri 16 bold", bg=background_color,
                                         padx=10, pady=10)
-        self.quiz_heading_label.grid(row=0)
+        self.quiz_heading_label.grid(row=0, sticky=NSEW)
 
         # Start Button (row 2)
         self.quiz_start_button = Button(self.quiz_frame,
@@ -45,14 +47,14 @@ class Quiz:
                                         font="calibri 16 bold", wrap=290,
                                         bg=button_color, width=10,
                                         padx=50, pady=5, command=self.name)
-        self.quiz_start_button.grid(row=2, padx=20, pady=10)
+        self.quiz_start_button.grid(row=2, padx=20, pady=10, sticky=NSEW)      
 
         # Help Button (row 3)
         self.help_button = Button(self.quiz_frame, text="Help",
                                   font="calibri 16 bold", wrap=290,
                                   bg=button_color, width=10, fg=foreground_color,
                                   padx=50, pady=5, command=self.help)
-        self.help_button.grid(row=3, padx=20, pady=10)
+        self.help_button.grid(row=3, padx=20, pady=10, sticky=NSEW)
 
     def name(self):
         Name(self)
@@ -80,6 +82,8 @@ class Help:
 
         # Sets up child window (ie: help box)
         self.help_box = Toplevel()
+        self.help_box.columnconfigure(0, weight=1)
+        self.help_box.rowconfigure(0, weight=1)
 
         # If users press cross at top, closes help and 'releases' help button
         self.help_box.protocol(
@@ -87,7 +91,9 @@ class Help:
 
         # Set up GUI Frame
         self.help_frame = Frame(self.help_box, width=300, bg=background)
-        self.help_frame.grid()
+        self.help_frame.grid(sticky=NSEW)
+        self.help_frame.columnconfigure(0, weight=1)
+        self.help_frame.rowconfigure(0, weight=1)
 
         # Set up help heading (row 0)
         self.how_heading = Label(self.help_frame, text="Help / Instructions",
@@ -129,6 +135,8 @@ class Name:
 
         # Sets up child window (ie: name entry box)
         self.name_box = Toplevel()
+        self.name_box.columnconfigure(0, weight=1)
+        self.name_box.rowconfigure(0, weight=1)
 
         # If users press cross at top, closes help and 'releases' help button
         self.name_box.protocol('WM_DELETE_WINDOW', partial(
@@ -136,7 +144,9 @@ class Name:
 
         # Set up GUI Frame
         self.name_frame = Frame(self.name_box, width=300, bg=background)
-        self.name_frame.grid()
+        self.name_frame.grid(sticky=NSEW)
+        self.name_frame.columnconfigure(0, weight=1)
+        self.name_frame.rowconfigure(0, weight=1)
 
         # Name Entry Heading (row 0)
         self.name_label = Label(self.name_frame, font="calibri 20 bold",
@@ -257,6 +267,8 @@ class Question:
 
         # Sets up child window (ie: question box)
         self.question_box = Toplevel()
+        self.question_box.columnconfigure(0, weight=1)
+        self.question_box.rowconfigure(0, weight=1)        
 
         # If users press cross at top, closes question box and 'releases' start button
         self.question_box.protocol('WM_DELETE_WINDOW',
@@ -265,7 +277,7 @@ class Question:
         # Question Frame
         self.question_frame = Frame(
             self.question_box, width=300, bg=background_color)
-        self.question_frame.grid()
+        self.question_frame.grid(sticky=NSEW)
 
         # Set up Question Heading (row 0)
         self.question_heading = Label(self.question_frame, text="Question " + str(len(question_number)),
@@ -412,9 +424,9 @@ class Question:
     def answer_1(self):
         if a in correct_answers:
             scores.append("1")
-            self.question_answer_1_button.config(bg="green")
+            self.question_answer_1_button.config(bg="pale green")
         else:
-            self.question_answer_1_button.config(bg="red")
+            self.question_answer_1_button.config(bg="IndianRed1")
 
         self.question_answer_1_button.configure(state=DISABLED)
         self.question_answer_2_button.configure(state=DISABLED)
@@ -425,9 +437,9 @@ class Question:
     def answer_2(self):
         if b in correct_answers:
             scores.append("1")
-            self.question_answer_2_button.config(bg="green")
+            self.question_answer_2_button.config(bg="pale green")
         else:
-            self.question_answer_2_button.config(bg="red")
+            self.question_answer_2_button.config(bg="IndianRed1")
 
         self.question_answer_1_button.configure(state=DISABLED)
         self.question_answer_2_button.configure(state=DISABLED)
@@ -438,9 +450,9 @@ class Question:
     def answer_3(self):
         if c in correct_answers:
             scores.append("1")
-            self.question_answer_3_button.config(bg="green")
+            self.question_answer_3_button.config(bg="pale green")
         else:
-            self.question_answer_3_button.config(bg="red")
+            self.question_answer_3_button.config(bg="IndianRed1")
 
         self.question_answer_1_button.configure(state=DISABLED)
         self.question_answer_2_button.configure(state=DISABLED)
@@ -451,9 +463,9 @@ class Question:
     def answer_4(self):
         if d in correct_answers:
             scores.append("1")
-            self.question_answer_4_button.config(bg="green")
+            self.question_answer_4_button.config(bg="pale green")
         else:
-            self.question_answer_4_button.config(bg="red")
+            self.question_answer_4_button.config(bg="IndianRed1")
 
         self.question_answer_1_button.configure(state=DISABLED)
         self.question_answer_2_button.configure(state=DISABLED)
@@ -535,7 +547,7 @@ class Game_Summary:
                                  text="Total Score", borderwidth=1, relief="solid",
                                  font="calibri 20 bold underline",
                                  bg=background_color, width=35, pady=10)
-        self.score_label.grid(row=0,)
+        self.score_label.grid(row=0)
 
         self.your_score_label = Label(parent.question_frame,
                                       text="Your Score Is: " +
@@ -754,5 +766,7 @@ class Exporting:
 if __name__ == "__main__":
     root = Tk()
     root.title("Geography Quiz")
+    root.columnconfigure(0, weight=1)
+    root.rowconfigure(0, weight=1)
     something = Quiz()
     root.mainloop()
