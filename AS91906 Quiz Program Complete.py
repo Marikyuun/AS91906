@@ -555,13 +555,47 @@ class Game_Summary:
                                       font="calibri 20 bold",
                                       bg=background_color, width=35, pady=10)
         self.your_score_label.grid(row=1, pady=10)
+        
+        self.all_score_label = Label(parent.question_frame,
+                                      text="Placeholder", font="calibri 20 bold",
+                                      bg=background_color, width=35, pady=10)
+        self.all_score_label.grid(row=2, pady=10)
+        
+        self.your_highscore_label = Label(parent.question_frame,
+                                      text="Placeholder", font="calibri 20 bold",
+                                      bg=background_color, width=35, pady=10)
+        self.your_highscore_label.grid(row=3, pady=10)        
 
         self.back_button = Button(parent.question_frame,
                                   text="Back",
                                   font="calibri 12",
                                   bg=foreground_color, width=10,
                                   command=parent.game_summary)
-        self.back_button.grid(pady=10, row=2)
+        self.back_button.grid(pady=10, row=4)
+        
+        
+        leaderboard_names2 = leaderboard_names.copy()
+        leaderboard_scores2 = leaderboard_scores.copy()
+        n = 0
+        words = ""
+        
+        for i in leaderboard_names:
+            if i==leaderboard_names[-1]: #This looks for names that are the same, which would mean that it is the user's past score.
+                n=n+1
+                index=leaderboard_names.index(i)
+                highscore_list.append(str(leaderboard_scores[index]))
+                del leaderboard_names[index]
+                del leaderboard_scores[index]
+        highscore_list.sort(reverse=True)
+        
+        n = 0
+        for i in range(0, len(highscore_list)):
+            if n < 10:
+                global name
+                n = n+1
+                words = words + str(n)+") "+str(name)+"     "+str(highscore_list[i])+"/10     \n"
+        self.all_score_label.configure(text="Top 10 Scores:\n"+words)
+        self.your_highscore_label.configure(text="Your highscore is "+(highscore_list[-1]).split(",")[0]+"/10")
 
     def question_summary(self, parent):
 
