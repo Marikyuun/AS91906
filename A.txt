@@ -27,3 +27,12 @@ he refused the Senate's demand that he disband his army.,he tried to flee his de
 Rhode Island,Wyoming,Maryland,Michigan
 Minnesota,Arizona,Massachusetts,Indiana
 Madagascar,Tanzania,Kiribati,New Zealand
+Nigeria,Ethiopia,Tanzania,Uganda
+Cape Horn,Cape Blanc,Cape Reinga,Cape York
+River Severn,River Thames,River Trent,River Tyne
+Canada,Russia,United States,China
+India,China,United States,Indonesia
+Canada,Indonesia,Norway,Russia
+Lebonon,Iraq,Iran,Saudi Arabia
+Warsaw,Krakow,Wroclaw,Gdynia
+E,X,G,R
