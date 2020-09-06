@@ -161,7 +161,7 @@ class Name:
         self.name_entry.grid(row=1, pady=10)
 
         self.name_error_label = Label(self.name_frame, font="calibri 14",
-                                      bg=background, width=30,
+                                      bg=background, width=35,
                                       text="")
         self.name_error_label.grid(row=2)
 
@@ -178,8 +178,11 @@ class Name:
         name = self.name_entry.get()
         not_valid = [""]
         if name.strip() in not_valid:
-            self.name_entry.configure(bg="red")
+            self.name_entry.configure(bg="IndianRed1")
             self.name_error_label.config(text="Please Enter A Valid Name")
+        elif len(name) > 15:
+            self.name_entry.configure(bg="IndianRed1")
+            self.name_error_label.config(text="Your name must not exceed 15 characters.")            
         else:
             self.question(parent)
 
@@ -201,6 +204,8 @@ class Question:
         background_color = "gold"
         button_color = "SteelBlue2"
         foreground_color = "white"
+        
+        setup_once = [1]
 
         file = open("Q.txt", "r")
         # reads the Q.txt file and appends every line individually to the questions list.
@@ -268,7 +273,7 @@ class Question:
         # Sets up child window (ie: question box)
         self.question_box = Toplevel()
         self.question_box.columnconfigure(0, weight=1)
-        self.question_box.rowconfigure(0, weight=1)        
+        self.question_box.rowconfigure(0, weight=1)    
 
         # If users press cross at top, closes question box and 'releases' start button
         self.question_box.protocol('WM_DELETE_WINDOW',
@@ -346,7 +351,7 @@ class Question:
 
         foreground_color = "white"
 
-        if len(question_number) < 10:  # CHANGE BACK TO 10 LATER
+        if len(question_number) < 2:  # CHANGE BACK TO 10 LATER
             question_number.append("1")
             question_index = random.randint(0, len(questions) - 1)
             temp_ans = answers[question_index].split(",")
@@ -479,7 +484,8 @@ class Question:
     def close_question(self, parent):
         # Put start button back to normal...
         parent.quiz_start_button.config(state=NORMAL)
-        parent.quiz_start_button.config(state=NORMAL)
+        # Put help button back to normal...
+        parent.help_button.config(state=NORMAL)        
         self.question_box.destroy()
 
 
@@ -498,7 +504,7 @@ class Game_Summary:
                                    bg=background_color, width=38,
                                    text="Quiz Summary", pady=10,
                                    borderwidth=3, relief="solid")
-        self.summary_label.grid(row=0)
+        self.summary_label.grid(row=0, columnspan=2)
 
         self.score_button = Button(parent.question_frame,
                                    text="View Score",
@@ -506,7 +512,7 @@ class Game_Summary:
                                    bg=button_color, width=30,
                                    padx=100, pady=20,
                                    command=lambda: self.score(parent))
-        self.score_button.grid(row=1, pady=20, padx=20)
+        self.score_button.grid(row=1, pady=20, padx=20, columnspan=2)
 
         self.question_summary_button = Button(parent.question_frame,
                                               text="Question Summary",
@@ -514,7 +520,7 @@ class Game_Summary:
                                               bg=button_color, width=30,
                                               padx=100, pady=20,
                                               command=lambda: self.question_summary(parent))
-        self.question_summary_button.grid(row=2, pady=20, padx=20)
+        self.question_summary_button.grid(row=2, pady=20, padx=20, columnspan=2)
 
         self.leaderboard_button = Button(parent.question_frame,
                                          text="Leaderboard",
@@ -522,14 +528,21 @@ class Game_Summary:
                                          bg=button_color, width=30,
                                          padx=100, pady=20,
                                          command=lambda: self.leaderboard(parent))
-        self.leaderboard_button.grid(row=3, pady=20, padx=20)
+        self.leaderboard_button.grid(row=3, pady=20, padx=20, columnspan=2)
 
         self.quit_button = Button(parent.question_frame,
                                   text="Quit",
                                   font="calibri 12",
-                                  bg="red", width=10,
+                                  bg="IndianRed1", width=10,
                                   command=self.quit)
-        self.quit_button.grid(pady=10, row=4)
+        self.quit_button.grid(pady=10, row=4, column=0)
+        
+        self.restart_button = Button(parent.question_frame,
+                                  text="Restart",
+                                  font="calibri 12",
+                                  bg="pale green", width=10,
+                                  command=lambda : self.restart(parent))
+        self.restart_button.grid(pady=10, row=4, column=1)
 
         if len(import_once) == 1:
             import_once.clear()
@@ -737,7 +750,26 @@ class Game_Summary:
 
     def quit(self):
         sys.exit()
-
+    
+    def restart(self,parent):
+        leaderboard_names = []
+        leaderboard_scores = []
+        questions = []
+        answers = []
+        scores = []
+        question_number = ["1"]
+        correct_answers = []
+        highscore_list = []
+        # One element in the list that will be deleted so that the import function happens only once
+        import_once = ['1']
+        question_summary_store = []
+        answer_summary_store = []
+        question_summary_index = 0
+        self.question(parent)
+    
+    def question(self,parent):
+        Question(parent)
+    
     def importing(self):
         Importing()
 
