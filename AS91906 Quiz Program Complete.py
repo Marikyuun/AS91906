@@ -16,7 +16,7 @@ import_once = ['1']
 question_summary_store = []
 answer_summary_store = []
 question_summary_index = 0
-
+setup_once = [1]
 
 class Quiz:
 
@@ -26,35 +26,39 @@ class Quiz:
         background_color = "gold"
         button_color = "SteelBlue2"
         foreground_color = "black"
-
-        # Quiz Frame
-        self.quiz_frame = Frame(bg=background_color,
-                                pady=10)
-        self.quiz_frame.grid(sticky=NSEW)
-        self.quiz_frame.columnconfigure(0, weight=1)
-        self.quiz_frame.rowconfigure(0, weight=1)
-
-        # Quiz Heading (row 0)
-        self.quiz_heading_label = Label(self.quiz_frame,
-                                        text="Geography Quiz",
-                                        font="calibri 16 bold", bg=background_color,
-                                        padx=10, pady=10)
-        self.quiz_heading_label.grid(row=0, sticky=NSEW)
-
-        # Start Button (row 2)
-        self.quiz_start_button = Button(self.quiz_frame,
-                                        text="START", fg=foreground_color,
-                                        font="calibri 16 bold", wrap=290,
-                                        bg=button_color, width=10,
-                                        padx=50, pady=5, command=self.name)
-        self.quiz_start_button.grid(row=2, padx=20, pady=10, sticky=NSEW)      
-
-        # Help Button (row 3)
-        self.help_button = Button(self.quiz_frame, text="Help",
-                                  font="calibri 16 bold", wrap=290,
-                                  bg=button_color, width=10, fg=foreground_color,
-                                  padx=50, pady=5, command=self.help)
-        self.help_button.grid(row=3, padx=20, pady=10, sticky=NSEW)
+        
+        if len(setup_once)==1:
+            # Quiz Frame
+            self.quiz_frame = Frame(bg=background_color,
+                                    pady=10)
+            self.quiz_frame.grid(sticky=NSEW)
+            self.quiz_frame.columnconfigure(0, weight=1)
+            self.quiz_frame.rowconfigure(0, weight=1)
+    
+            # Quiz Heading (row 0)
+            self.quiz_heading_label = Label(self.quiz_frame,
+                                            text="Geography Quiz",
+                                            font="calibri 16 bold", bg=background_color,
+                                            padx=10, pady=10)
+            self.quiz_heading_label.grid(row=0, sticky=NSEW)
+    
+            # Start Button (row 2)
+            self.quiz_start_button = Button(self.quiz_frame,
+                                            text="START", fg=foreground_color,
+                                            font="calibri 16 bold", wrap=290,
+                                            bg=button_color, width=10,
+                                            padx=50, pady=5, command=self.name)
+            self.quiz_start_button.grid(row=2, padx=20, pady=10, sticky=NSEW)      
+    
+            # Help Button (row 3)
+            self.help_button = Button(self.quiz_frame, text="Help",
+                                      font="calibri 16 bold", wrap=290,
+                                      bg=button_color, width=10, fg=foreground_color,
+                                      padx=50, pady=5, command=self.help)
+            self.help_button.grid(row=3, padx=20, pady=10, sticky=NSEW)
+        
+        else:
+            self.name()
 
     def name(self):
         Name(self)
@@ -126,52 +130,57 @@ class Name:
         background = "gold"
         foreground = "white"
         button_color = "SteelBlue2"
-
-        # disable start button
-        parent.quiz_start_button.config(state=DISABLED)
-
-        # disable help button
-        parent.help_button.config(state=DISABLED)
-
-        # Sets up child window (ie: name entry box)
-        self.name_box = Toplevel()
-        self.name_box.columnconfigure(0, weight=1)
-        self.name_box.rowconfigure(0, weight=1)
-
-        # If users press cross at top, closes help and 'releases' help button
-        self.name_box.protocol('WM_DELETE_WINDOW', partial(
-            self.close_name_entry, parent))
-
-        # Set up GUI Frame
-        self.name_frame = Frame(self.name_box, width=300, bg=background)
-        self.name_frame.grid(sticky=NSEW)
-        self.name_frame.columnconfigure(0, weight=1)
-        self.name_frame.rowconfigure(0, weight=1)
-
-        # Name Entry Heading (row 0)
-        self.name_label = Label(self.name_frame, font="calibri 20 bold",
-                                bg=background, width=30,
-                                text="Please Enter Your Username Below")
-        self.name_label.grid(row=0)
-
-        # User Name Entry Box (row 1)
-        self.name_entry = Entry(
-            self.name_frame, width=30, bg="white",
-            font="calibri 16 bold", justify='center')
-        self.name_entry.grid(row=1, pady=10)
-
-        self.name_error_label = Label(self.name_frame, font="calibri 14",
-                                      bg=background, width=35,
-                                      text="")
-        self.name_error_label.grid(row=2)
-
-        # User Name Submit Box (row 2)
-        self.name_submit_button = Button(self.name_frame,
-                                         font="calibri 16 bold", width=30,
-                                         pady=5, bg=button_color,
-                                         text="Submit",
-                                         command=partial(self.name_record, parent))
-        self.name_submit_button.grid(row=3, pady=15)
+        
+        if len(setup_once) == 1:
+        
+            # disable start button
+            parent.quiz_start_button.config(state=DISABLED)
+    
+            # disable help button
+            parent.help_button.config(state=DISABLED)
+    
+            # Sets up child window (ie: name entry box)
+            self.name_box = Toplevel()
+            self.name_box.columnconfigure(0, weight=1)
+            self.name_box.rowconfigure(0, weight=1)
+    
+            # If users press cross at top, closes help and 'releases' help button
+            self.name_box.protocol('WM_DELETE_WINDOW', partial(
+                self.close_name_entry, parent))
+    
+            # Set up GUI Frame
+            self.name_frame = Frame(self.name_box, width=300, bg=background)
+            self.name_frame.grid(sticky=NSEW)
+            self.name_frame.columnconfigure(0, weight=1)
+            self.name_frame.rowconfigure(0, weight=1)
+    
+            # Name Entry Heading (row 0)
+            self.name_label = Label(self.name_frame, font="calibri 20 bold",
+                                    bg=background, width=30,
+                                    text="Please Enter Your Username Below")
+            self.name_label.grid(row=0)
+    
+            # User Name Entry Box (row 1)
+            self.name_entry = Entry(
+                self.name_frame, width=30, bg="white",
+                font="calibri 16 bold", justify='center')
+            self.name_entry.grid(row=1, pady=10)
+    
+            self.name_error_label = Label(self.name_frame, font="calibri 14",
+                                          bg=background, width=35,
+                                          text="")
+            self.name_error_label.grid(row=2)
+    
+            # User Name Submit Box (row 2)
+            self.name_submit_button = Button(self.name_frame,
+                                             font="calibri 16 bold", width=30,
+                                             pady=5, bg=button_color,
+                                             text="Submit",
+                                             command=partial(self.name_record, parent))
+            self.name_submit_button.grid(row=3, pady=15)
+        
+        else:
+            self.question(parent)
 
     def name_record(self, parent):
         global name
@@ -193,7 +202,8 @@ class Name:
         self.name_box.destroy()
 
     def question(self, parent):
-        self.name_box.destroy()
+        if len(setup_once) == 1:
+            self.name_box.destroy()
         Question(parent)
 
 
@@ -205,7 +215,7 @@ class Question:
         button_color = "SteelBlue2"
         foreground_color = "white"
         
-        setup_once = [1]
+        setup_once.clear()
 
         file = open("Q.txt", "r")
         # reads the Q.txt file and appends every line individually to the questions list.
@@ -267,8 +277,9 @@ class Question:
             # If the answer isn't 'a' 'b' or 'c', the answer is 'd'.
             answer = 'd'
 
-        # disable start button
-        parent.quiz_start_button.config(state=DISABLED)
+        if len(setup_once) == 1:
+            # disable start button
+            parent.quiz_start_button.config(state=DISABLED)
 
         # Sets up child window (ie: question box)
         self.question_box = Toplevel()
@@ -752,23 +763,36 @@ class Game_Summary:
         sys.exit()
     
     def restart(self,parent):
+        global leaderboard_names
         leaderboard_names = []
+        global leaderboard_scores
         leaderboard_scores = []
+        global questions
         questions = []
+        global answers
         answers = []
+        global scores
         scores = []
+        global question_number
         question_number = ["1"]
+        global corect_answers
         correct_answers = []
+        global highscore_list
         highscore_list = []
         # One element in the list that will be deleted so that the import function happens only once
+        global import_once
         import_once = ['1']
+        global question_summary_store
         question_summary_store = []
+        global answer_summary_store
         answer_summary_store = []
+        global question_summary_index
         question_summary_index = 0
-        self.question(parent)
+        self.quiz(parent)
     
-    def question(self,parent):
-        Question(parent)
+    def quiz(self,parent):
+        parent.question_box.destroy()
+        Quiz()
     
     def importing(self):
         Importing()
