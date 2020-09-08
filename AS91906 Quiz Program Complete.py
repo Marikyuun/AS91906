@@ -16,7 +16,7 @@ import_once = ['1']
 question_summary_store = []
 answer_summary_store = []
 question_summary_index = 0
-setup_once = [1]
+setup_once = [1] # For Restart
 
 class Quiz:
 
@@ -185,13 +185,13 @@ class Name:
     def name_record(self, parent):
         global name
         name = self.name_entry.get()
-        not_valid = [""]
+        not_valid = ["",","]
         if name.strip() in not_valid:
             self.name_entry.configure(bg="IndianRed1")
             self.name_error_label.config(text="Please Enter A Valid Name")
         elif len(name) > 15:
             self.name_entry.configure(bg="IndianRed1")
-            self.name_error_label.config(text="Your name must not exceed 15 characters.")            
+            self.name_error_label.config(text="Your name must not exceed 15 characters.")
         else:
             self.question(parent)
 
@@ -306,7 +306,7 @@ class Question:
         self.question_label = Label(self.question_frame,
                                     text=questions[question_index],
                                     font="calibri 14 bold", wrap=290,
-                                    bg=background_color, width=30,
+                                    bg=background_color, width=30, height=3,
                                     padx=100, pady=20)
         self.question_label.grid(row=1)
 
@@ -318,6 +318,7 @@ class Question:
                                                text="a) " + a,
                                                font="calibri 12", wrap=290,
                                                bg=foreground_color, width=30,
+                                               height=2,
                                                padx=100, pady=20,
                                                command=self.answer_1)
         self.question_answer_1_button.grid(row=2, pady=10)
@@ -327,6 +328,7 @@ class Question:
                                                text="b) " + b,
                                                font="calibri 12", wrap=290,
                                                bg=foreground_color, width=30,
+                                               height=2,
                                                padx=100, pady=20,
                                                command=self.answer_2)
         self.question_answer_2_button.grid(row=3, pady=10)
@@ -336,6 +338,7 @@ class Question:
                                                text="c) " + c,
                                                font="calibri 12", wrap=290,
                                                bg=foreground_color, width=30,
+                                               height=2,
                                                padx=100, pady=20,
                                                command=self.answer_3)
         self.question_answer_3_button.grid(row=4, pady=10)
@@ -346,6 +349,7 @@ class Question:
                                                font="calibri 12", wrap=290,
                                                bg=foreground_color, width=30,
                                                padx=100, pady=20,
+                                               height=2,
                                                command=self.answer_4)
         self.question_answer_4_button.grid(row=5, pady=10)
 
@@ -362,7 +366,7 @@ class Question:
 
         foreground_color = "white"
 
-        if len(question_number) < 2:  # CHANGE BACK TO 10 LATER
+        if len(question_number) < 10:  # CHANGE BACK TO 10 LATER
             question_number.append("1")
             question_index = random.randint(0, len(questions) - 1)
             temp_ans = answers[question_index].split(",")
@@ -644,11 +648,13 @@ class Game_Summary:
         self.question_label = Label(parent.question_frame,
                                     text="Q: " + question_summary_store[question_summary_index], wrap=290,
                                     font="calibri 12", borderwidth=1, relief="solid",
+                                    height=2,
                                     bg=background_color, width=43, pady=10)
         self.question_label.grid(row=2, pady=20, columnspan=2)
 
         self.answer_label = Label(parent.question_frame,
                                   text="A: " + answer_summary_store[question_summary_index], wrap=290,
+                                  height=2,
                                   font="calibri 12", borderwidth=1, relief="solid",
                                   bg=background_color, width=43, pady=10)
         self.answer_label.grid(row=3, pady=20, columnspan=2)
@@ -856,6 +862,7 @@ class Exporting:
 if __name__ == "__main__":
     root = Tk()
     root.title("Geography Quiz")
+    root.resizable(1000,1000)
     root.columnconfigure(0, weight=1)
     root.rowconfigure(0, weight=1)
     something = Quiz()
