@@ -11,12 +11,14 @@ scores = []
 question_number = ["1"]
 correct_answers = []
 highscore_list = []
-# One element in the list that will be deleted so that the import function happens only once
+# One element in the list that will be deleted so that the
+# import function happens only once
 import_once = ['1']
 question_summary_store = []
 answer_summary_store = []
 question_summary_index = 0
-setup_once = [1] # For Restart
+setup_once = [1]  # For Restart
+
 
 class Quiz:
 
@@ -26,37 +28,39 @@ class Quiz:
         background_color = "gold"
         button_color = "SteelBlue2"
         foreground_color = "black"
-        
-        if len(setup_once)==1:
+
+        if len(setup_once) == 1:
             # Quiz Frame
             self.quiz_frame = Frame(bg=background_color,
                                     pady=10)
             self.quiz_frame.grid(sticky=NSEW)
             self.quiz_frame.columnconfigure(0, weight=1)
             self.quiz_frame.rowconfigure(0, weight=1)
-    
+
             # Quiz Heading (row 0)
             self.quiz_heading_label = Label(self.quiz_frame,
                                             text="Geography Quiz",
-                                            font="calibri 16 bold", bg=background_color,
+                                            font="calibri 16 bold",
+                                            bg=background_color,
                                             padx=10, pady=10)
             self.quiz_heading_label.grid(row=0, sticky=NSEW)
-    
+
             # Start Button (row 2)
             self.quiz_start_button = Button(self.quiz_frame,
                                             text="START", fg=foreground_color,
                                             font="calibri 16 bold", wrap=290,
                                             bg=button_color, width=10,
                                             padx=50, pady=5, command=self.name)
-            self.quiz_start_button.grid(row=2, padx=20, pady=10, sticky=NSEW)      
-    
+            self.quiz_start_button.grid(row=2, padx=20, pady=10, sticky=NSEW)
+
             # Help Button (row 3)
             self.help_button = Button(self.quiz_frame, text="Help",
                                       font="calibri 16 bold", wrap=290,
-                                      bg=button_color, width=10, fg=foreground_color,
+                                      bg=button_color, width=10,
+                                      fg=foreground_color,
                                       padx=50, pady=5, command=self.help)
             self.help_button.grid(row=3, padx=20, pady=10, sticky=NSEW)
-        
+
         else:
             self.name()
 
@@ -66,8 +70,8 @@ class Quiz:
     def help(self):
         get_help = Help(self)
         get_help.help_text.configure(text="Click on the button that "
-                                          "contains the correct answer."
-                                          "\n\nWhen you are ready press START.",)
+                                          "contains the correct answer.\n\n"
+                                          "When you are ready press START.")
 
 
 class Help:
@@ -130,68 +134,79 @@ class Name:
         background = "gold"
         foreground = "white"
         button_color = "SteelBlue2"
-        
+
         if len(setup_once) == 1:
-        
+
             # disable start button
             parent.quiz_start_button.config(state=DISABLED)
-    
+
             # disable help button
             parent.help_button.config(state=DISABLED)
-    
+
             # Sets up child window (ie: name entry box)
             self.name_box = Toplevel()
             self.name_box.columnconfigure(0, weight=1)
             self.name_box.rowconfigure(0, weight=1)
-    
-            # If users press cross at top, closes help and 'releases' help button
+
+            # If users press cross at top, closes help and releases help button
             self.name_box.protocol('WM_DELETE_WINDOW', partial(
                 self.close_name_entry, parent))
-    
+
             # Set up GUI Frame
             self.name_frame = Frame(self.name_box, width=300, bg=background)
             self.name_frame.grid(sticky=NSEW)
             self.name_frame.columnconfigure(0, weight=1)
             self.name_frame.rowconfigure(0, weight=1)
-    
+
             # Name Entry Heading (row 0)
             self.name_label = Label(self.name_frame, font="calibri 20 bold",
                                     bg=background, width=30,
                                     text="Please Enter Your Username Below")
             self.name_label.grid(row=0)
-    
+
             # User Name Entry Box (row 1)
             self.name_entry = Entry(
                 self.name_frame, width=30, bg="white",
                 font="calibri 16 bold", justify='center')
             self.name_entry.grid(row=1, pady=10)
-    
+
             self.name_error_label = Label(self.name_frame, font="calibri 14",
                                           bg=background, width=35,
                                           text="")
             self.name_error_label.grid(row=2)
-    
+
             # User Name Submit Box (row 2)
             self.name_submit_button = Button(self.name_frame,
                                              font="calibri 16 bold", width=30,
                                              pady=5, bg=button_color,
                                              text="Submit",
-                                             command=partial(self.name_record, parent))
+                                             command=partial(
+                                                 self.name_record, parent))
             self.name_submit_button.grid(row=3, pady=15)
-        
+
         else:
             self.question(parent)
 
     def name_record(self, parent):
         global name
         name = self.name_entry.get()
-        not_valid = ["",","]
+        not_valid = ["", ","]
+        for i in name:
+            if i in not_valid:
+                self.name_entry.configure(bg="IndianRed1")
+                self.name_error_label.config(
+                    text="Please Enter A Valid Name")
         if name.strip() in not_valid:
             self.name_entry.configure(bg="IndianRed1")
             self.name_error_label.config(text="Please Enter A Valid Name")
-        elif len(name) > 15:
+        elif len(name.strip()) < 3:
             self.name_entry.configure(bg="IndianRed1")
-            self.name_error_label.config(text="Your name must not exceed 15 characters.")
+            self.name_error_label.config(
+                text="Your Name Must Have 3-16 Characters")
+        elif len(name.strip()) > 16:
+            self.name_entry.configure(bg="IndianRed1")
+            self.name_error_label.config(
+                text="Your Name Must Have 3-16 Characters")
         else:
             self.question(parent)
 
@@ -214,19 +229,19 @@ class Question:
         background_color = "gold"
         button_color = "SteelBlue2"
         foreground_color = "white"
-        
+
         setup_once.clear()
 
         file = open("Q.txt", "r")
-        # reads the Q.txt file and appends every line individually to the questions list.
+        # reads the Q.txt file and appends every line to the questions list.
         for i in file.read().split("\n"):
             questions.append(i)
         file.close()
         file = open("A.txt", "r")
-        # reads the A.txt file and appends every line individually to the answers list.
+        # reads the A.txt file and appends every line to the answers list.
         for i in file.read().split("\n"):
             answers.append(i)
-        # There is an extra empty item in the both the lists so this removes it.
+        # There is an extra empty item in the both the lists so this removes it
         questions.pop()
         answers.pop()
         temp_answers = []
@@ -245,9 +260,7 @@ class Question:
         a = temp_ans[a_no]
         del temp_ans[a_no]
         if answer_control not in temp_ans:
-            answer = 'a'  # It deletes the random answer that was printed and
-            # checks the list to see if the answer is still in the list.
-            # If the answer has been deleted, then 'a' will be the answer.
+            answer = 'a'
 
         b_no = random.randint(0, 2)
         global b
@@ -255,9 +268,7 @@ class Question:
         del temp_ans[b_no]
         if answer != 'a':
             if answer_control not in temp_ans:
-                answer = 'b'  # It deletes the random answer that was printed
-                # and checks the list to see if the answer is still in the list.
-                # If the answer has been deleted, then 'b' will be the answer.
+                answer = 'b'
 
         c_no = random.randint(0, 1)
         global c
@@ -265,16 +276,13 @@ class Question:
         del temp_ans[c_no]
         if answer != 'a' and answer != 'b':
             if answer_control not in temp_ans:
-                answer = 'c'  # It deletes the random answer that was printed
-                # and checks the list to see if the answer is still in the list.
-                # If the answer has been deleted, then 'c' will be the answer.
+                answer = 'c'
 
         d_no = 0
         global d
         d = temp_ans[d_no]
         del temp_ans[d_no]
         if answer == answer_control:
-            # If the answer isn't 'a' 'b' or 'c', the answer is 'd'.
             answer = 'd'
 
         if len(setup_once) == 1:
@@ -284,9 +292,9 @@ class Question:
         # Sets up child window (ie: question box)
         self.question_box = Toplevel()
         self.question_box.columnconfigure(0, weight=1)
-        self.question_box.rowconfigure(0, weight=1)    
+        self.question_box.rowconfigure(0, weight=1)
 
-        # If users press cross at top, closes question box and 'releases' start button
+        # users press cross at top closes question box and release start button
         self.question_box.protocol('WM_DELETE_WINDOW',
                                    partial(self.close_question, parent))
 
@@ -296,7 +304,8 @@ class Question:
         self.question_frame.grid(sticky=NSEW)
 
         # Set up Question Heading (row 0)
-        self.question_heading = Label(self.question_frame, text="Question " + str(len(question_number)),
+        self.question_heading = Label(self.question_frame, text="Question " +
+                                      str(len(question_number)),
                                       font="calibri 16 bold",
                                       bg=background_color, padx=210, pady=20,
                                       borderwidth=2, relief="solid")
@@ -318,9 +327,8 @@ class Question:
                                                text="a) " + a,
                                                font="calibri 12", wrap=290,
                                                bg=foreground_color, width=30,
-                                               height=2,
-                                               padx=100, pady=20,
-                                               command=self.answer_1)
+                                               padx=100, pady=20, height=2,
+                                               command=lambda: self.answern(1))
         self.question_answer_1_button.grid(row=2, pady=10)
 
         # Answer 2 (row 3)
@@ -328,9 +336,8 @@ class Question:
                                                text="b) " + b,
                                                font="calibri 12", wrap=290,
                                                bg=foreground_color, width=30,
-                                               height=2,
-                                               padx=100, pady=20,
-                                               command=self.answer_2)
+                                               padx=100, pady=20, height=2,
+                                               command=lambda: self.answern(2))
         self.question_answer_2_button.grid(row=3, pady=10)
 
         # Answer 3 (row 4)
@@ -338,9 +345,8 @@ class Question:
                                                text="c) " + c,
                                                font="calibri 12", wrap=290,
                                                bg=foreground_color, width=30,
-                                               height=2,
-                                               padx=100, pady=20,
-                                               command=self.answer_3)
+                                               padx=100, pady=20, height=2,
+                                               command=lambda: self.answern(3))
         self.question_answer_3_button.grid(row=4, pady=10)
 
         # Answer 4 (row 5)
@@ -348,9 +354,8 @@ class Question:
                                                text="d) " + d,
                                                font="calibri 12", wrap=290,
                                                bg=foreground_color, width=30,
-                                               padx=100, pady=20,
-                                               height=2,
-                                               command=self.answer_4)
+                                               padx=100, pady=20, height=2,
+                                               command=lambda: self.answern(4))
         self.question_answer_4_button.grid(row=5, pady=10)
 
         self.next_question_button = Button(self.question_frame,
@@ -366,7 +371,7 @@ class Question:
 
         foreground_color = "white"
 
-        if len(question_number) < 10:  # CHANGE BACK TO 10 LATER
+        if len(question_number) < 10:
             question_number.append("1")
             question_index = random.randint(0, len(questions) - 1)
             temp_ans = answers[question_index].split(",")
@@ -380,8 +385,8 @@ class Question:
             a = temp_ans[a_no]
             del temp_ans[a_no]
             if answer_control not in temp_ans:
-                answer = 'a'  # It deletes the random answer that was printed
-                # and checks the list to see if the answer is still in the list.
+                answer = 'a'  # deletes the random answer that was printed
+                # checks the list to see if the answer is still in the list.
                 # If the answer has been deleted, then 'a' will be the answer.
             b_no = random.randint(0, 2)
             global b
@@ -389,18 +394,18 @@ class Question:
             del temp_ans[b_no]
             if answer != 'a':
                 if answer_control not in temp_ans:
-                    answer = 'b'  # It deletes the random answer that was printed
-                    # and checks the list to see if the answer is still in the list.
-                    # If the answer has been deleted, then 'b' will be the answer.
+                    answer = 'b'  # deletes the random answer that was printed
+                    # check the list to see if the answer is still in the list.
+                    # If the answer has been deleted then b will be the answer.
             c_no = random.randint(0, 1)
             global c
             c = temp_ans[c_no]
             del temp_ans[c_no]
             if answer != 'a' and answer != 'b':
                 if answer_control not in temp_ans:
-                    answer = 'c'  # It deletes the random answer that was printed
-                    # and checks the list to see if the answer is still in the list.
-                    # If the answer has been deleted, then 'c' will be the answer.
+                    answer = 'c'  # deletes the random answer that was printed
+                    # check the list to see if the answer is still in the list.
+                    # If the answer has been deleted then c will be the answer.
             d_no = 0
             global d
             d = temp_ans[d_no]
@@ -441,51 +446,39 @@ class Question:
         score = len(scores)
         leaderboard_scores.append(str(score))
 
-    def answer_1(self):
+    def answern(self, n):
+        if n == 1:
+            if a not in correct_answers:
+                self.question_answer_1_button.config(bg="IndianRed1")
+            else:
+                scores.append("1")
+
+        elif n == 2:
+            if b not in correct_answers:
+                self.question_answer_2_button.config(bg="Indian Red1")
+            else:
+                scores.append("1")
+
+        elif n == 3:
+            if c not in correct_answers:
+                self.question_answer_3_button.config(bg="Indian Red1")
+            else:
+                scores.append("1")
+
+        elif n == 4:
+            if d not in correct_answers:
+                self.question_answer_4_button.config(bg="Indian Red1")
+            else:
+                scores.append("1")
+
         if a in correct_answers:
-            scores.append("1")
             self.question_answer_1_button.config(bg="pale green")
-        else:
-            self.question_answer_1_button.config(bg="IndianRed1")
-
-        self.question_answer_1_button.configure(state=DISABLED)
-        self.question_answer_2_button.configure(state=DISABLED)
-        self.question_answer_3_button.configure(state=DISABLED)
-        self.question_answer_4_button.configure(state=DISABLED)
-        self.next_question_button.config(state=NORMAL)
-
-    def answer_2(self):
-        if b in correct_answers:
-            scores.append("1")
+        elif b in correct_answers:
             self.question_answer_2_button.config(bg="pale green")
-        else:
-            self.question_answer_2_button.config(bg="IndianRed1")
-
-        self.question_answer_1_button.configure(state=DISABLED)
-        self.question_answer_2_button.configure(state=DISABLED)
-        self.question_answer_3_button.configure(state=DISABLED)
-        self.question_answer_4_button.configure(state=DISABLED)
-        self.next_question_button.config(state=NORMAL)
-
-    def answer_3(self):
-        if c in correct_answers:
-            scores.append("1")
+        elif c in correct_answers:
             self.question_answer_3_button.config(bg="pale green")
-        else:
-            self.question_answer_3_button.config(bg="IndianRed1")
-
-        self.question_answer_1_button.configure(state=DISABLED)
-        self.question_answer_2_button.configure(state=DISABLED)
-        self.question_answer_3_button.configure(state=DISABLED)
-        self.question_answer_4_button.configure(state=DISABLED)
-        self.next_question_button.config(state=NORMAL)
-
-    def answer_4(self):
-        if d in correct_answers:
-            scores.append("1")
+        elif d in correct_answers:
             self.question_answer_4_button.config(bg="pale green")
-        else:
-            self.question_answer_4_button.config(bg="IndianRed1")
 
         self.question_answer_1_button.configure(state=DISABLED)
         self.question_answer_2_button.configure(state=DISABLED)
@@ -500,7 +493,7 @@ class Question:
         # Put start button back to normal...
         parent.quiz_start_button.config(state=NORMAL)
         # Put help button back to normal...
-        parent.help_button.config(state=NORMAL)        
+        parent.help_button.config(state=NORMAL)
         self.question_box.destroy()
 
 
@@ -534,15 +527,18 @@ class Game_Summary:
                                               font="calibri 13 bold", wrap=290,
                                               bg=button_color, width=30,
                                               padx=100, pady=20,
-                                              command=lambda: self.question_summary(parent))
-        self.question_summary_button.grid(row=2, pady=20, padx=20, columnspan=2)
+                                              command=lambda:
+                                              self.question_summary(parent))
+        self.question_summary_button.grid(
+            row=2, pady=20, padx=20, columnspan=2)
 
         self.leaderboard_button = Button(parent.question_frame,
                                          text="Leaderboard",
                                          font="calibri 13 bold", wrap=290,
                                          bg=button_color, width=30,
                                          padx=100, pady=20,
-                                         command=lambda: self.leaderboard(parent))
+                                         command=lambda:
+                                         self.leaderboard(parent))
         self.leaderboard_button.grid(row=3, pady=20, padx=20, columnspan=2)
 
         self.quit_button = Button(parent.question_frame,
@@ -551,12 +547,12 @@ class Game_Summary:
                                   bg="IndianRed1", width=10,
                                   command=self.quit)
         self.quit_button.grid(pady=10, row=4, column=0)
-        
+
         self.restart_button = Button(parent.question_frame,
-                                  text="Restart",
-                                  font="calibri 12",
-                                  bg="pale green", width=10,
-                                  command=lambda : self.restart(parent))
+                                     text="Restart",
+                                     font="calibri 12",
+                                     bg="pale green", width=10,
+                                     command=lambda: self.restart(parent))
         self.restart_button.grid(pady=10, row=4, column=1)
 
         if len(import_once) == 1:
@@ -572,7 +568,8 @@ class Game_Summary:
         parent.destroy_children(parent.question_frame)
 
         self.score_label = Label(parent.question_frame,
-                                 text="Total Score", borderwidth=1, relief="solid",
+                                 text="Total Score",
+                                 borderwidth=1, relief="solid",
                                  font="calibri 20 bold underline",
                                  bg=background_color, width=35, pady=10)
         self.score_label.grid(row=0)
@@ -583,16 +580,18 @@ class Game_Summary:
                                       font="calibri 20 bold",
                                       bg=background_color, width=35, pady=10)
         self.your_score_label.grid(row=1, pady=10)
-        
+
         self.all_score_label = Label(parent.question_frame,
-                                      text="Placeholder", font="calibri 20 bold",
-                                      bg=background_color, width=35, pady=10)
+                                     text="Placeholdr", font="calibri 20 bold",
+                                     bg=background_color, width=35, pady=10)
         self.all_score_label.grid(row=2, pady=10)
-        
+
         self.your_highscore_label = Label(parent.question_frame,
-                                      text="Placeholder", font="calibri 20 bold",
-                                      bg=background_color, width=35, pady=10)
-        self.your_highscore_label.grid(row=3, pady=10)        
+                                          text="Placeholder",
+                                          font="calibri 20 bold",
+                                          bg=background_color,
+                                          width=35, pady=10)
+        self.your_highscore_label.grid(row=3, pady=10)
 
         self.back_button = Button(parent.question_frame,
                                   text="Back",
@@ -600,30 +599,33 @@ class Game_Summary:
                                   bg=foreground_color, width=10,
                                   command=parent.game_summary)
         self.back_button.grid(pady=10, row=4)
-        
-        
+
         leaderboard_names2 = leaderboard_names.copy()
         leaderboard_scores2 = leaderboard_scores.copy()
         n = 0
         words = ""
-        
+
         for i in leaderboard_names:
-            if i==leaderboard_names[-1]: #This looks for names that are the same, which would mean that it is the user's past score.
-                n=n+1
-                index=leaderboard_names.index(i)
+            # This looks for names that are the same
+            if i == leaderboard_names[-1]:
+                n = n + 1
+                index = leaderboard_names.index(i)
                 highscore_list.append(str(leaderboard_scores[index]))
                 del leaderboard_names[index]
                 del leaderboard_scores[index]
         highscore_list.sort(reverse=True)
-        
+
         n = 0
         for i in range(0, len(highscore_list)):
             if n < 10:
                 global name
-                n = n+1
-                words = words + str(n)+") "+str(name)+"     "+str(highscore_list[i])+"/10     \n"
-        self.all_score_label.configure(text="Top 10 Scores:\n"+words)
-        self.your_highscore_label.configure(text="Your highscore is "+(highscore_list[-1]).split(",")[0]+"/10")
+                n = n + 1
+                words = words + str(n) + ") " + str(name) + \
+                    "     " + str(highscore_list[i]) + "/10     \n"
+        self.all_score_label.configure(text="Top 10 Scores:\n" + words)
+        self.your_highscore_label.configure(
+            text="Your highscore is " +
+            (highscore_list[-1]).split(",")[0] + "/10")
 
     def question_summary(self, parent):
 
@@ -634,48 +636,56 @@ class Game_Summary:
         parent.destroy_children(parent.question_frame)
 
         self.score_label = Label(parent.question_frame,
-                                 text="Question Summary", borderwidth=1, relief="solid",
+                                 text="Question Summary",
+                                 borderwidth=1, relief="solid",
                                  font="calibri 20 bold underline",
                                  bg=background_color, width=35, pady=10)
         self.score_label.grid(row=0, columnspan=2)
 
         self.question_number_label = Label(parent.question_frame,
-                                           text="Question " + str(question_summary_index + 1), wrap=290,
-                                           font="calibri 14 bold", borderwidth=1, relief="solid",
-                                           bg=background_color, width=35, pady=10)
+                                           text="Question " +
+                                           str(question_summary_index + 1),
+                                           wrap=290, font="calibri 14 bold",
+                                           borderwidth=1, relief="solid",
+                                           bg=background_color,
+                                           width=35, pady=10)
         self.question_number_label.grid(row=1, pady=20, columnspan=2)
 
         self.question_label = Label(parent.question_frame,
-                                    text="Q: " + question_summary_store[question_summary_index], wrap=290,
-                                    font="calibri 12", borderwidth=1, relief="solid",
-                                    height=2,
+                                    text="Q: " + question_summary_store[
+                                        question_summary_index], wrap=290,
+                                    font="calibri 12",
+                                    borderwidth=1, relief="solid", height=2,
                                     bg=background_color, width=43, pady=10)
         self.question_label.grid(row=2, pady=20, columnspan=2)
 
         self.answer_label = Label(parent.question_frame,
-                                  text="A: " + answer_summary_store[question_summary_index], wrap=290,
-                                  height=2,
-                                  font="calibri 12", borderwidth=1, relief="solid",
+                                  text="A: " + answer_summary_store[
+                                      question_summary_index],
+                                  wrap=290, height=2, font="calibri 12",
+                                  borderwidth=1, relief="solid",
                                   bg=background_color, width=43, pady=10)
         self.answer_label.grid(row=3, pady=20, columnspan=2)
 
         self.previous_question_button = Button(parent.question_frame,
                                                text="Previous Question",
                                                font="calibri 12", wrap=290,
-                                               bg=button_color,
-                                               padx=30, pady=10, command=lambda: self.previous_question(parent))
+                                               bg=button_color, pady=10,
+                                               padx=30, command=lambda:
+                                               self.previous_question(parent))
         self.previous_question_button.grid(row=4, column=0, pady=5, padx=3)
 
         self.next_question_button = Button(parent.question_frame,
                                            text="Next Question",
                                            font="calibri 12", wrap=290,
                                            bg=button_color,
-                                           padx=30, pady=10, command=lambda: self.next_question(parent))
+                                           padx=30, pady=10, command=lambda:
+                                           self.next_question(parent))
         self.next_question_button.grid(row=4, column=1, pady=5, padx=3)
 
         self.back_button = Button(parent.question_frame,
-                                  text="Back",
-                                  font="calibri 12", borderwidth=1, relief="solid",
+                                  text="Back", font="calibri 12",
+                                  borderwidth=1, relief="solid",
                                   bg="white", width=10,
                                   command=parent.game_summary)
         self.back_button.grid(pady=15, row=5, columnspan=2)
@@ -714,21 +724,22 @@ class Game_Summary:
         parent.destroy_children(parent.question_frame)
 
         self.score_label = Label(parent.question_frame,
-                                 text="Leaderboard", borderwidth=1, relief="solid",
-                                 font="calibri 20 bold underline",
-                                 bg=background_color, width=35, pady=10)
-        self.score_label.grid(row=0,)
+                                 text="Leaderboard", borderwidth=1,
+                                 font="calibri 20 bold underline", pady=10,
+                                 bg=background_color, width=35, relief="solid")
+        self.score_label.grid(row=0)
 
         self.top_score_label = Label(parent.question_frame,
-                                     text="Top 10 Scores",
-                                     font="calibri 20 bold underline", borderwidth=1,
+                                     text="Top 10 Scores", borderwidth=1,
+                                     font="calibri 20 bold underline",
                                      bg=background_color, width=35, pady=10)
         self.top_score_label.grid(row=1, pady=10)
 
         self.leaderboard_score_label = Label(parent.question_frame,
                                              text="Placeholder", justify=LEFT,
-                                             font="calibri 20 bold", borderwidth=1,
-                                             bg=background_color, width=35, pady=10)
+                                             font="calibri 20 bold",
+                                             borderwidth=1, pady=10,
+                                             bg=background_color, width=35)
         self.leaderboard_score_label.grid(row=2)
 
         self.back_button = Button(parent.question_frame,
@@ -744,6 +755,7 @@ class Game_Summary:
         for i in range(0, len(temp_scores)):
             temp_scores[i] = int(temp_scores[i])
         temp_scores = sorted(temp_scores, reverse=True)
+        ranking = temp_scores.copy()
         # Turns the temp scores into a string.
         for i in range(0, len(temp_scores)):
             temp_scores[i] = str(temp_scores[i])
@@ -755,20 +767,25 @@ class Game_Summary:
 
         for i in temp_scores:
             n = n + 1
+            leaderboard_sort = leaderboard_scores2.index(int(i))
             if n < 11:
-                leaderboard_sort = leaderboard_scores2.index(int(i))
-                leaderboard_sort = leaderboard_scores2.index(int(i))
-                words = (words + str(temp_scores.index(i) + 1) + ")    " +
+                name = leaderboard_names2[leaderboard_sort]
+                words = (words + str(n) + ")    " +
                          leaderboard_names2[leaderboard_sort] + " " + str(
                     leaderboard_scores2[leaderboard_sort]) + "/10\n")
-                self.leaderboard_score_label.configure(text=words)
-                del leaderboard_names2[leaderboard_sort]
-                del leaderboard_scores2[leaderboard_sort]
+                for number in range(leaderboard_names2.count(
+                        leaderboard_names2[leaderboard_sort])):
+                    index = leaderboard_names2.index(name)
+                    del leaderboard_names2[index]
+                    del leaderboard_scores2[index]
+                    del temp_scores[leaderboard_scores2[index]]
+
+        self.leaderboard_score_label.configure(text=words)
 
     def quit(self):
         sys.exit()
-    
-    def restart(self,parent):
+
+    def restart(self, parent):
         global leaderboard_names
         leaderboard_names = []
         global leaderboard_scores
@@ -785,7 +802,7 @@ class Game_Summary:
         correct_answers = []
         global highscore_list
         highscore_list = []
-        # One element in the list that will be deleted so that the import function happens only once
+        # One element in the list that will be deleted
         global import_once
         import_once = ['1']
         global question_summary_store
@@ -795,11 +812,11 @@ class Game_Summary:
         global question_summary_index
         question_summary_index = 0
         self.quiz(parent)
-    
-    def quiz(self,parent):
+
+    def quiz(self, parent):
         parent.question_box.destroy()
         Quiz()
-    
+
     def importing(self):
         Importing()
 
@@ -862,7 +879,6 @@ class Exporting:
 if __name__ == "__main__":
     root = Tk()
     root.title("Geography Quiz")
-    root.resizable(1000,1000)
     root.columnconfigure(0, weight=1)
     root.rowconfigure(0, weight=1)
     something = Quiz()
