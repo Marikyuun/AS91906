@@ -372,7 +372,7 @@ class Question:
 
         __foreground_color = "white"
 
-        if len(question_number) < 10:
+        if len(question_number) < 2:
             question_number.append("1")
             question_index = random.randint(0, len(questions) - 1)
             __temp_ans = answers[question_index].split(",")
@@ -603,19 +603,19 @@ class Game_Summary:
                                   command=parent.game_summary)
         self.back_button.grid(pady=10, row=4)
 
-        leaderboard_names2 = leaderboard_names.copy()
-        leaderboard_scores2 = leaderboard_scores.copy()
+        __leaderboard_names2 = leaderboard_names.copy()
+        __leaderboard_scores2 = leaderboard_scores.copy()
         n = 0
         words = ""
 
         for i in leaderboard_names:
             # This looks for names that are the same
-            if i == leaderboard_names2[-1]:
+            if i == __leaderboard_names2[-1]:
                 n = n + 1
-                index = leaderboard_names2.index(i)
-                highscore_list.append(str(leaderboard_scores2[index]))
-                del leaderboard_names2[index]
-                del leaderboard_scores2[index]
+                index = __leaderboard_names2.index(i)
+                highscore_list.append(str(__leaderboard_scores2[index]))
+                del __leaderboard_names2[index]
+                del __leaderboard_scores2[index]
         highscore_list.sort(reverse=True)
 
         n = 0
@@ -763,26 +763,27 @@ class Game_Summary:
         # Turns the temp scores into a string.
         for i in range(0, len(temp_scores)):
             temp_scores[i] = str(temp_scores[i])
-        leaderboard_names2 = leaderboard_names.copy()
-        leaderboard_scores2 = leaderboard_scores.copy()
+        __leaderboard_names2 = leaderboard_names.copy()
+        __leaderboard_scores2 = leaderboard_scores.copy()
 
         n = 0
         words = ""
 
         for i in temp_scores:
             n = n + 1
-            leaderboard_sort = leaderboard_scores2.index(int(i))
+            leaderboard_sort = __leaderboard_scores2.index(
+                sorted(__leaderboard_scores2)[-1])
             if n < 11:
-                name = leaderboard_names2[leaderboard_sort]
+                name = __leaderboard_names2[leaderboard_sort]
                 words = (words + str(n) + ")    " +
-                         leaderboard_names2[leaderboard_sort] + " " + str(
-                    leaderboard_scores2[leaderboard_sort]) + "/10\n")
-                for number in range(leaderboard_names2.count(
-                        leaderboard_names2[leaderboard_sort])):
-                    index = leaderboard_names2.index(name)
-                    del leaderboard_names2[index]
-                    del leaderboard_scores2[index]
-                    del temp_scores[leaderboard_scores2[index]]
+                         __leaderboard_names2[leaderboard_sort] + " " + str(
+                    __leaderboard_scores2[leaderboard_sort]) + "/10\n")
+                for number in range(__leaderboard_names2.count(
+                        __leaderboard_names2[leaderboard_sort])):
+                    index = __leaderboard_names2.index(name)
+                    del __leaderboard_names2[index]
+                    del __leaderboard_scores2[index]
+                    del temp_scores[__leaderboard_scores2[index]]
 
         self.leaderboard_score_label.configure(text=words)
 
