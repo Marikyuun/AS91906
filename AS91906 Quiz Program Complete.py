@@ -24,8 +24,8 @@ class Quiz:
     def __init__(self):
 
         # Formatting variables
-        __background_color = "gold"
-        __button_color = "SteelBlue2"
+        __background_color = "misty rose"
+        __button_color = "rosybrown1"
         __foreground_color = "black"
 
         if len(setup_once) == 1:
@@ -77,8 +77,8 @@ class Help:
 
     def __init__(self, parent):
 
-        __background = "gold"
-        __button_color = "SteelBlue2"
+        __background = "misty rose"
+        __button_color = "rosybrown1"
         __foreground_color = "black"
 
         # disable start button
@@ -131,9 +131,9 @@ class Name:
 
     def __init__(self, parent):
 
-        __background = "gold"
+        __background = "misty rose"
         foreground = "white"
-        __button_color = "SteelBlue2"
+        __button_color = "rosybrown1"
 
         if len(setup_once) == 1:
 
@@ -227,8 +227,8 @@ class Question:
 
     def __init__(self, parent):
 
-        __background_color = "gold"
-        __button_color = "SteelBlue2"
+        __background_color = "misty rose"
+        __button_color = "rosybrown1"
         __foreground_color = "white"
 
         setup_once.clear()
@@ -325,38 +325,38 @@ class Question:
 
         # Answer 1 (row 2)
         self.__question_answer_1_button = Button(self.question_frame,
-                                                 text="a) " + a, width=30,
+                                                 text=a, width=30,
                                                  font="calibri 12", wrap=290,
                                                  bg=__foreground_color,
                                                  padx=100, pady=20, height=2,
-                                                 command=lambda: self.answern(1))
+                                                 command=lambda: self.confirm(1))
         self.__question_answer_1_button.grid(row=2, pady=10)
 
         # Answer 2 (row 3)
         self.__question_answer_2_button = Button(self.question_frame,
-                                                 text="b) " + b, width=30,
+                                                 text=b, width=30,
                                                  font="calibri 12", wrap=290,
                                                  bg=__foreground_color,
                                                  padx=100, pady=20, height=2,
-                                                 command=lambda: self.answern(2))
+                                                 command=lambda: self.confirm(2))
         self.__question_answer_2_button.grid(row=3, pady=10)
 
         # Answer 3 (row 4)
         self.__question_answer_3_button = Button(self.question_frame,
-                                                 text="c) " + c, width=30,
+                                                 text=c, width=30,
                                                  font="calibri 12", wrap=290,
                                                  bg=__foreground_color,
                                                  padx=100, pady=20, height=2,
-                                                 command=lambda: self.answern(3))
+                                                 command=lambda: self.confirm(3))
         self.__question_answer_3_button.grid(row=4, pady=10)
 
         # Answer 4 (row 5)
         self.__question_answer_4_button = Button(self.question_frame,
-                                                 text="d) " + d, width=30,
+                                                 text=d, width=30,
                                                  font="calibri 12", wrap=290,
                                                  bg=__foreground_color,
                                                  padx=100, pady=20, height=2,
-                                                 command=lambda: self.answern(4))
+                                                 command=lambda: self.confirm(4))
         self.__question_answer_4_button.grid(row=5, pady=10)
 
         self.next_question_button = Button(self.question_frame,
@@ -364,7 +364,6 @@ class Question:
                                            font="calibri 12", wrap=290,
                                            bg=__button_color,
                                            padx=50, pady=10,
-                                           command=self.next_question,
                                            state=DISABLED)
         self.next_question_button.grid(row=6, pady=20, padx=20)
 
@@ -372,7 +371,7 @@ class Question:
 
         __foreground_color = "white"
 
-        if len(question_number) < 2:
+        if len(question_number) < 10:
             question_number.append("1")
             question_index = random.randint(0, len(questions) - 1)
             __temp_ans = answers[question_index].split(",")
@@ -447,6 +446,37 @@ class Question:
         score = len(scores)
         leaderboard_scores.append(str(score))
 
+    def confirm(self, n):
+        __foreground_color = "white"
+        self.__question_answer_1_button.configure(state=NORMAL,
+                                                  bg=__foreground_color)
+        self.__question_answer_2_button.configure(state=NORMAL,
+                                                  bg=__foreground_color)
+        self.__question_answer_3_button.configure(state=NORMAL,
+                                                  bg=__foreground_color)
+        self.__question_answer_4_button.configure(state=NORMAL,
+                                                  bg=__foreground_color)
+        self.next_question_button.config(state=NORMAL,
+                                         command=lambda: self.answern(n))
+        
+        if n == 1:
+            self.__question_answer_1_button.configure(state=DISABLED,
+                                                       bg="gray85")
+        
+        elif n == 2:
+            self.__question_answer_2_button.configure(state=DISABLED,
+                                                       bg="gray85")
+        
+        elif n == 3:
+            self.__question_answer_3_button.configure(state=DISABLED,
+                                                       bg="gray85")
+        
+        elif n == 4:
+            self.__question_answer_4_button.configure(state=DISABLED,
+                                                       bg="gray85")
+
+
+
     def answern(self, n):
         if n == 1:
             if a not in correct_answers:
@@ -485,7 +515,8 @@ class Question:
         self.__question_answer_2_button.configure(state=DISABLED)
         self.__question_answer_3_button.configure(state=DISABLED)
         self.__question_answer_4_button.configure(state=DISABLED)
-        self.next_question_button.config(state=NORMAL)
+        self.next_question_button.config(state=NORMAL,
+                                         command=self.next_question)
 
     def game_summary(self):
         Game_Summary(self)
@@ -502,8 +533,8 @@ class Game_Summary:
 
     def __init__(self, parent):
 
-        __background_color = "gold"
-        __button_color = "SteelBlue2"
+        __background_color = "misty rose"
+        __button_color = "rosybrown1"
         __foreground_color = "white"
 
         parent.destroy_children(parent.question_frame)
@@ -562,8 +593,8 @@ class Game_Summary:
 
     def score(self, parent):
 
-        __background_color = "gold"
-        __button_color = "SteelBlue2"
+        __background_color = "misty rose"
+        __button_color = "rosybrown1"
         __foreground_color = "white"
 
         highscore_list = []
@@ -633,8 +664,8 @@ class Game_Summary:
 
     def question_summary(self, parent):
 
-        __background_color = "gold"
-        __button_color = "SteelBlue2"
+        __background_color = "misty rose"
+        __button_color = "rosybrown1"
         __foreground_color = "white"
 
         parent.destroy_children(parent.question_frame)
@@ -721,8 +752,8 @@ class Game_Summary:
 
     def leaderboard(self, parent):
 
-        __background_color = "gold"
-        __button_color = "SteelBlue2"
+        __background_color = "misty rose"
+        __button_color = "rosybrown1"
         __foreground_color = "white"
 
         parent.destroy_children(parent.question_frame)
@@ -759,7 +790,6 @@ class Game_Summary:
         for i in range(0, len(temp_scores)):
             temp_scores[i] = int(temp_scores[i])
         temp_scores = sorted(temp_scores, reverse=True)
-        ranking = temp_scores.copy()
         # Turns the temp scores into a string.
         for i in range(0, len(temp_scores)):
             temp_scores[i] = str(temp_scores[i])
@@ -783,7 +813,6 @@ class Game_Summary:
                     index = __leaderboard_names2.index(name)
                     del __leaderboard_names2[index]
                     del __leaderboard_scores2[index]
-                    del temp_scores[__leaderboard_scores2[index]]
 
         self.leaderboard_score_label.configure(text=words)
 
