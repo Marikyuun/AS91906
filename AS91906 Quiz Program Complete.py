@@ -10,7 +10,6 @@ answers = []
 scores = []
 question_number = ["1"]
 correct_answers = []
-highscore_list = []
 # One element in the list that will be deleted so that the
 # import function happens only once
 import_once = ['1']
@@ -567,6 +566,8 @@ class Game_Summary:
         __button_color = "SteelBlue2"
         __foreground_color = "white"
 
+        highscore_list = []
+
         parent.destroy_children(parent.question_frame)
 
         self.score_label = Label(parent.question_frame,
@@ -609,12 +610,12 @@ class Game_Summary:
 
         for i in leaderboard_names:
             # This looks for names that are the same
-            if i == leaderboard_names[-1]:
+            if i == leaderboard_names2[-1]:
                 n = n + 1
-                index = leaderboard_names.index(i)
-                highscore_list.append(str(leaderboard_scores[index]))
-                del leaderboard_names[index]
-                del leaderboard_scores[index]
+                index = leaderboard_names2.index(i)
+                highscore_list.append(str(leaderboard_scores2[index]))
+                del leaderboard_names2[index]
+                del leaderboard_scores2[index]
         highscore_list.sort(reverse=True)
 
         n = 0
@@ -627,7 +628,8 @@ class Game_Summary:
         self.all_score_label.configure(text="Top 10 Scores:\n" + words)
         self.your_highscore_label.configure(
             text="Your highscore is " +
-            (highscore_list[-1]).split(",")[0] + "/10")
+            (highscore_list[0]).split(",")[0] + "/10")
+        highscore_list.clear()
 
     def question_summary(self, parent):
 
@@ -802,8 +804,6 @@ class Game_Summary:
         question_number = ["1"]
         global corect_answers
         correct_answers = []
-        global highscore_list
-        highscore_list = []
         # One element in the list that will be deleted
         global import_once
         import_once = ['1']
